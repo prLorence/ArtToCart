@@ -1,10 +1,10 @@
 using ArtToCart.Domain.Common;
 
-namespace ArtToCart.Domain.ProductRoot.ValueObjects;
+namespace ArtToCart.Domain.Entities.ValueObjects;
 
 public class ProductId : ValueObject
 {
-    public Guid Value { get; protected set; }
+    public Guid Value { get; private set; }
 
     private ProductId(Guid value)
     {

@@ -1,6 +1,7 @@
 namespace ArtToCart.Domain.Common;
 
-public class BaseAuditableEntity : BaseEntity
+public class BaseAuditableEntity<T> : BaseEntity<T>
+    where T: ValueObject
 {
     public DateTimeOffset Created { get; set; }
 
