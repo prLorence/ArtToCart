@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ArtToCart.Domain\ArtToCart.Domain.csproj" />
+    <ProjectReference Include="..\ArtToCart.Infrastructure\ArtToCart.Infrastructure.csproj" />
+  </ItemGroup>
+    
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+
 </Project>
