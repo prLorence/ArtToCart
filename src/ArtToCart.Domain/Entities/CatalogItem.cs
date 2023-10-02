@@ -1,18 +1,18 @@
 using ArtToCart.Domain.Common;
 using ArtToCart.Domain.Entities.ValueObjects;
+using ArtToCart.Domain.Interfaces;
 
 namespace ArtToCart.Domain.Entities;
 
-public class CatalogItem : BaseEntity<ProductId>
+public class CatalogItem : BaseEntity<CatalogItemId>, IAggregateRoot
 {
     public string Name { get; set;  }
     public decimal Price { get; set; }
     public string Description { get; set; }
     public string SellerId { get; set; }
-
     public string ProductPhotoUri { get; set; }
 
-    private CatalogItem(ProductId id,
+    private CatalogItem(CatalogItemId id,
         string name,
         decimal price,
         string description,
@@ -26,16 +26,15 @@ public class CatalogItem : BaseEntity<ProductId>
         ProductPhotoUri = productPhotoUri;
     }
 #pragma warning disable CS8618 // Required by Entity Framework
-    private CatalogItem(string productPhotoUri)
+    private CatalogItem()
     {
-        ProductPhotoUri = productPhotoUri;
     }
 #pragma warning disable CS8618
 
     public CatalogItem Create(string name, decimal price, string description, string sellerId, string productPhotoUri)
     {
         return new(
-            ProductId.CreateUnique(),
+            CatalogItemId.CreateUnique(),
             name,
             price,
             description,

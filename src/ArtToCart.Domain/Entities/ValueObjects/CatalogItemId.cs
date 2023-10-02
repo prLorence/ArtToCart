@@ -2,11 +2,11 @@ using ArtToCart.Domain.Common;
 
 namespace ArtToCart.Domain.Entities.ValueObjects;
 
-public class ProductId : ValueObject
+public class CatalogItemId : ValueObject
 {
     public Guid Value { get; private set; }
 
-    private ProductId(Guid value)
+    private CatalogItemId(Guid value)
     {
         Value = value;
     }
@@ -16,13 +16,13 @@ public class ProductId : ValueObject
         yield return Value;
     }
 
-    public static ProductId CreateUnique()
+    public static CatalogItemId CreateUnique()
     {
-        return new ProductId(Guid.NewGuid());
+        return new CatalogItemId(Guid.NewGuid());
     }
 
-    public static ProductId CreateFrom(Guid guid)
+    public static CatalogItemId CreateFrom(string id)
     {
-        return new ProductId(guid);
+        return new CatalogItemId(Guid.Parse(id));
     }
 }
