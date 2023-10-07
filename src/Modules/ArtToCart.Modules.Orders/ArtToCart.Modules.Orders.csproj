@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\BuildingBlocks\ArtToCart.Core\ArtToCart.Core.csproj" />
-  </ItemGroup>
-
 </Project>

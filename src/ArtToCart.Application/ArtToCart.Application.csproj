@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!--https://github.com/dotnet/aspnetcore/issues/19481-->
+        <!--https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app-->
+        <!--https://docs.microsoft.com/en-us/aspnet/core/fundamentals/target-aspnetcore-->
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentResults" Version="3.15.2" />
+      <PackageReference Include="MediatR" Version="12.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ArtToCart.Infrastructure\ArtToCart.Infrastructure.csproj" />
+    </ItemGroup>
+
+
+</Project>
