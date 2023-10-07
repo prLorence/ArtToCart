@@ -1,6 +1,7 @@
-using ArtToCart.Domain.Common;
 
-namespace ArtToCart.Domain.Entities.ValueObjects;
+using ArtToCart.Core.Domain;
+
+namespace ArtToCart.Modules.Catalogs.Products.ValueObjects;
 
 public class CatalogItemId : ValueObject
 {
