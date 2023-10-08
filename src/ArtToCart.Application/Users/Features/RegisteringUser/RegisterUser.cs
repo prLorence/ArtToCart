@@ -10,24 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
-public class RegisterUserController : BaseController
-{
-    private readonly ISender _sender;
-
-    public RegisterUserController(ISender sender)
-    {
-        _sender = sender;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> Register([FromBody] RegisterUserCommand command)
-    {
-        var result = await _sender.Send(command);
-        // return result;
-        return Ok(result.Value);
-    }
-}
-
 public record RegisterUserCommand(
     string FirstName,
     string LastName,
@@ -60,7 +42,9 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
 
         var createUserResult = await _userManager.CreateAsync(newUser, request.Password);
 
+        if (!createUserResult.Succeeded)
+            return Result.Fail(string.Join(",", createUserResult.Errors.Select(e => e.Description)));
 
-        return new RegisterUserResponse(null);
+        return new RegisterUserResponse("registered user!", null);
     }
 }
