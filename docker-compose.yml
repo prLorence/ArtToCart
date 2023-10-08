@@ -3,9 +3,13 @@ version: '1'
 services:
   arttocartapi:
     image: arttocartapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     build:
       context: .
       dockerfile: src/ArtToCart.Api/Dockerfile
+    ports:
+      - '8080:80'
     depends_on:
       - database
 
@@ -14,6 +18,7 @@ services:
     ports:
       - 15432:5432
     environment:
+      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "example"
     networks:
       - postgres-network
@@ -35,6 +40,7 @@ services:
       - postgres-network
     volumes:
       - ./pgadmin-data/:/var/lib/pgadmin/
+
 networks:
   postgres-network:
     driver: bridge
