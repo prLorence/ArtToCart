@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ArtToCart.Web;
+namespace ArtToCart.Application.Identity.Shared;
 
 [ApiController]
 public class BaseController : Controller
