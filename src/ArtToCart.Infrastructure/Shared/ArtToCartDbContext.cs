@@ -1,5 +1,4 @@
-using ArtToCart.Infrastructure.Identity.Models;
-using ArtToCart.Modules.Identity.Shared.Models;
+using ArtToCart.Application.Shared.Models;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
