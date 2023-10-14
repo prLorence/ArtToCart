@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace ArtToCart.Infrastructure.Identity.Models;
+namespace ArtToCart.Application.Shared.Models;
 
 public class ApplicationRole : IdentityRole<Guid>
 {

@@ -1,9 +1,9 @@
-using ArtToCart.Infrastructure.Identity.Models;
+using ArtToCart.Application.Shared.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ArtToCart.Infrastructure.Identity.Data.EntityConfigurations;
+namespace ArtToCart.Infrastructure.Data.EntityConfigurations;
 
 public class ApplicationRoleConfiguration : IEntityTypeConfiguration<ApplicationRole>
 {
