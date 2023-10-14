@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
 		README.md = README.md
+		docker-compose.db.yml = docker-compose.db.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtToCart.Domain", "src\ArtToCart.Domain\ArtToCart.Domain.csproj", "{EE775B6D-3AAE-4B75-99EE-82E9EC2558BA}"

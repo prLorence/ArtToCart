@@ -1,6 +1,6 @@
-using ArtToCart.Infrastructure.Identity.Models;
+using ArtToCart.Application.Shared.Models;
+using ArtToCart.Infrastructure.Security.Jwt;
 using ArtToCart.Infrastructure.Shared;
-using ArtToCart.Modules.Identity.Shared.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +20,14 @@ public static class DepedencyInjection
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ArtToCartDbContext>();
 
+        return services;
+    }
+
+    // public static IServiceCollection AddCustomJwtAuthentication(this IServiceCollection services, )
+    public static IServiceCollection AddJwt(this IServiceCollection services, IConfiguration config)
+    {
+        // configure from appsettings.json
+        services.AddTransient<IJwtService, JwtService>();
         return services;
     }
 

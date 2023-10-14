@@ -1,3 +1,5 @@
+using ArtToCart.Application.Identity;
+
 namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
 public record RegisterUserRequest(
@@ -6,4 +8,7 @@ public record RegisterUserRequest(
     string UserName,
     string Email,
     string Password,
-    string ConfirmPassword);
+    string ConfirmPassword)
+{
+    public IEnumerable<string> Roles { get; init; } = new List<string> { Constants.Role.User };
+}
