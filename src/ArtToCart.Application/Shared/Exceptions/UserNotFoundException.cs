@@ -1,4 +1,4 @@
-namespace ArtToCart.Application.Identity.Shared.Exceptions;
+namespace ArtToCart.Web.Exceptions;
 
 public class UserNotFoundException : Exception
 {

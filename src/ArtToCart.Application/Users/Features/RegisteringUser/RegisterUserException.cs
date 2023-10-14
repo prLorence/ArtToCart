@@ -1,4 +1,4 @@
-namespace ArtToCart.Application.Identity.Users.Features.RegisteringUser;
+namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
 public class RegisterUserException : Exception
 {

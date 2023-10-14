@@ -1,4 +1,6 @@
-namespace ArtToCart.Application.Identity.Users.Features.RegisteringUser;
+using ArtToCart.Application.Identity;
+
+namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
 public record RegisterUserRequest(
     string FirstName,

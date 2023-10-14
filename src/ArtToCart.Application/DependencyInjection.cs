@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-using ArtToCart.Application.Identity.Users.Features.RegisteringUser;
+using ArtToCart.Application.Users.Features.RegisteringUser;
 
 using MediatR;
 

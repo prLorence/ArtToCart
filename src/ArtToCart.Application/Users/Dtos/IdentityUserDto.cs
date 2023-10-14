@@ -1,4 +1,4 @@
-namespace ArtToCart.Application.Identity.Users.Dtos;
+namespace ArtToCart.Application.Users.Dtos;
 
 public class IdentityUserDto
 {

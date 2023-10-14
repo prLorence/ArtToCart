@@ -1,4 +1,6 @@
+using ArtToCart.Application.Identity;
 using ArtToCart.Application.Shared.Models;
+using ArtToCart.Web;
 
 using FluentResults;
 
@@ -7,8 +9,9 @@ using FluentValidation;
 using MediatR;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
-namespace ArtToCart.Application.Identity.Users.Features.RegisteringUser;
+namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
 
 public record RegisterUserCommand(

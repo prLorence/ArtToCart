@@ -1,10 +1,10 @@
-using ArtToCart.Application.Identity.Shared;
+using ArtToCart.Web;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace ArtToCart.Application.Identity.Users.Features.RegisteringUser;
+namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
 [Route("/users/[action]")]
 public class RegisterUserController: BaseController
