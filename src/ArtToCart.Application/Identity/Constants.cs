@@ -5,7 +5,7 @@ public static class Constants
     public static class Role
     {
         public const string User = "user";
-        public const string Admin = "admin";
-        // artist role
+        public const string Admin = "user";
+        public const string Artist = "user";
     }
 }
