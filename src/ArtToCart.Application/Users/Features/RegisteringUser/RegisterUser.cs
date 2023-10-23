@@ -64,7 +64,8 @@ internal class RegisterUserValidation : AbstractValidator<RegisterUserCommand>
         {
             if (roles != null &&
                 !roles.All(x => x.Contains(Constants.Role.Admin, StringComparison.Ordinal) ||
-                                x.Contains(Constants.Role.User, StringComparison.Ordinal)))
+                                x.Contains(Constants.Role.User, StringComparison.Ordinal) ||
+                                x.Contains(Constants.Role.Artist, StringComparison.Ordinal)))
                 // add the validation for the artist role
             {
                 c.AddFailure("Invalid roles.");
