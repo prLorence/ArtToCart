@@ -1,3 +1,5 @@
+using ArtToCart.Application.Shared.Models;
+
 namespace ArtToCart.Application.Users.Dtos;
 
 public class IdentityUserDto
@@ -7,5 +9,9 @@ public class IdentityUserDto
     public string Email { get; set; } = null!;
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
+    public DateTime? LastLoggedInAt { get; set; }
+    public IEnumerable<string>? RefreshTokens { get; set; }
+    public IEnumerable<string>? Roles { get; set; }
+    public UserState UserState { get; set; }
     public DateTime CreatedAt { get; set; }
 }
