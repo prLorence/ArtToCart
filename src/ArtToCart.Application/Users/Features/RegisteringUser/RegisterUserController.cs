@@ -29,6 +29,6 @@ public class RegisterUserController: BaseController
 
         var result = await _sender.Send(command);
         // return result;
-        return Ok(result.Value.Result);
+        return Ok(result.Value);
     }
 }
