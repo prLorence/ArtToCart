@@ -6,6 +6,6 @@ public static class Constants
     {
         public const string User = "user";
         public const string Admin = "admin";
-        // artist role
+        public const string Artist = "artist";
     }
 }
