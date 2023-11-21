@@ -1,1 +1,2 @@
 docker exec -it arttocart-database-1 psql -U postgres postgres -c "DROP DATABASE art_to_cart_dev;"
+

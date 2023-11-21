@@ -38,14 +38,6 @@ using (var scope = app.Services.CreateScope())
             await seeder.SeedAllAsync();
             app.Logger.LogInformation("Seeding '{Seed}' ended...", seeder.GetType().Name);
         }
-
-        // var userManager = scopedProvider.GetRequiredService<>();
-        //
-        // var identityContext = scopedProvider.GetRequiredService<ArtToCartIdentityDbContext>();
-        //
-        // identityContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-        //
-        // await IdentityDataSeeder.SeedRoles(identityContext, userManager, roleManager);
     }
     catch (Exception ex)
     {

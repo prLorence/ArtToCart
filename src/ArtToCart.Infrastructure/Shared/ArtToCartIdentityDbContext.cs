@@ -1,4 +1,7 @@
+using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Application.Shared.Models;
+using ArtToCart.Domain.Products;
+using ArtToCart.Domain.Products.Entities;
 using ArtToCart.Infrastructure.Data;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -28,6 +31,8 @@ public class ArtToCartIdentityDbContext : IdentityDbContext<ApplicationUser, App
 
     }
 
-
+    public DbSet<CatalogType> CatalogTypes { get; set; }
+    public DbSet<ProductImage> ProductImages { get; set; }
+    public DbSet<CatalogItem> CatalogItems { get; set; }
     public DbSet<ApplicationUser> Users { get; set; }
 }
