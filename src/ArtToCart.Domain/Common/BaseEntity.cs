@@ -6,7 +6,7 @@ namespace ArtToCart.Domain.Common;
 
 public abstract class BaseEntity<T>
 {
-    protected T Id { get; init; }
+    public T Id { get; init; }
 
     private readonly List<BaseEvent> _domainEvents = new();
 
