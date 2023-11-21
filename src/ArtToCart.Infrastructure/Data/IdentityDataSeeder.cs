@@ -21,7 +21,7 @@ public class IdentityDataSeeder : IDataSeeder
     public async Task SeedAllAsync()
     {
         await SeedRoles();
-        // await SeedUsers();
+        await SeedUsers();
     }
 
     private async Task SeedRoles()
@@ -40,44 +40,34 @@ public class IdentityDataSeeder : IDataSeeder
         }
     }
 
-    // private async Task SeedRoles()
-    // {
-    //     if (!await _roleManager.RoleExistsAsync(ApplicationRole.Admin.Name))
-    //         await _roleManager.CreateAsync(ApplicationRole.Admin);
-    //
-    //     if (!await _roleManager.RoleExistsAsync(ApplicationRole.User.Name))
-    //         await _roleManager.CreateAsync(ApplicationRole.User);
-    // }
+    private async Task SeedUsers()
+    {
+        if (await _userManager.FindByEmailAsync("example@test.com") == null)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = "test123",
+                FirstName = "Test",
+                LastName = "Tester",
+                Email = "example@test.com",
+            };
 
-    // private async Task SeedUsers()
-    // {
-    //     if (await _userManager.FindByEmailAsync("mehdi@test.com") == null)
-    //     {
-    //         var user = new ApplicationUser
-    //         {
-    //             UserName = "mehdi",
-    //             FirstName = "Mehdi",
-    //             LastName = "test",
-    //             Email = "mehdi@test.com",
-    //         };
-    //
-    //         var result = await _userManager.CreateAsync(user, "123456");
-    //
-    //         if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.Admin.Name);
-    //     }
-    //
-    //     if (await _userManager.FindByEmailAsync("mehdi2@test.com") == null)
-    //     {
-    //         var user = new ApplicationUser
-    //         {
-    //             UserName = "mehdi2", FirstName = "Mehdi", LastName = "Test", Email = "mehdi2@test.com"
-    //         };
-    //
-    //         var result = await _userManager.CreateAsync(user, "123456");
-    //
-    //         if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.User.Name);
-    //     }
-    // }
-    //
+            var result = await _userManager.CreateAsync(user, "123456");
+
+            if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.Admin.Name);
+        }
+
+        if (await _userManager.FindByEmailAsync("test2@test.com") == null)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = "test2", FirstName = "Test", LastName = "Tester2", Email = "test2@test.com"
+            };
+
+            var result = await _userManager.CreateAsync(user, "123456");
+
+            if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.User.Name);
+        }
+    }
 }
 

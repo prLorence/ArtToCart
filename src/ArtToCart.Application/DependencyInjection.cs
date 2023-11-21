@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 
+using ArtToCart.Application.Catalog.Shared.MapConfigs;
 using ArtToCart.Application.Shared;
 using ArtToCart.Application.Users.Features.RegisteringUser;
 
@@ -18,6 +19,9 @@ public static class DependencyInjection
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        services.AddMapster();
+
 
         return services;
     }

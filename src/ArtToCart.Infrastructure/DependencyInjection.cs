@@ -3,8 +3,10 @@ using System.Net;
 using System.Text;
 
 using ArtToCart.Application.Shared.Exceptions;
+using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Application.Shared.Models;
 using ArtToCart.Infrastructure.Data;
+using ArtToCart.Infrastructure.Repositories;
 using ArtToCart.Infrastructure.Security.Jwt;
 using ArtToCart.Infrastructure.Shared;
 using ArtToCart.Infrastructure.Shared.Persistance;
@@ -33,6 +35,9 @@ public static class DependencyInjection
                 .AddDefaultTokenProviders();
 
         services.AddScoped<IDataSeeder, IdentityDataSeeder>();
+        services.AddScoped<IDataSeeder, CatalogDataSeeder>();
+
+        services.AddTransient(typeof(IRepository<>), typeof(ProductRepository<>));
 
         return services;
     }
