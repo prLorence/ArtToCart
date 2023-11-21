@@ -1,0 +1,1 @@
+dotnet ef database update 20231028092905_Test -p src/ArtToCart.Infrastructure -s src/ArtToCart.Api

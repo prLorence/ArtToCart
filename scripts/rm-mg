@@ -1,0 +1,1 @@
+dotnet ef migrations remove -p src/ArtToCart.Infrastructure -s src/ArtToCart.Api
