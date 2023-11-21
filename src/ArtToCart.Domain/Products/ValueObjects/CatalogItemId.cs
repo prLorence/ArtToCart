@@ -26,4 +26,9 @@ public class CatalogItemId : ValueObject
     {
         return new CatalogItemId(Guid.Parse(id));
     }
+
+    public static CatalogItemId CreateFrom(Guid id)
+    {
+        return new CatalogItemId(id);
+    }
 }

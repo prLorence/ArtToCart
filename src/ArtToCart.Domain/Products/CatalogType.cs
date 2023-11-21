@@ -19,7 +19,7 @@ public class CatalogType : BaseEntity<CatalogTypeId>, IAggregateRoot
         Type = type;
     }
 
-    public CatalogType Create(string brand)
+    public static CatalogType Create(string brand)
     {
         return new(
             CatalogTypeId.CreateUnique(),
