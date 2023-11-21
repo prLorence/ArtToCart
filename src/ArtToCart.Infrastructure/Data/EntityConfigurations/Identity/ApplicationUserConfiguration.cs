@@ -3,7 +3,7 @@ using ArtToCart.Application.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ArtToCart.Infrastructure.Data.EntityConfigurations;
+namespace ArtToCart.Infrastructure.Data.EntityConfigurations.Identity;
 
 internal class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
