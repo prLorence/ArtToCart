@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Infrastructure.Shared.Jwt;
 
 using Microsoft.Extensions.Options;

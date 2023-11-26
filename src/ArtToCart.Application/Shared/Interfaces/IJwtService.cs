@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace ArtToCart.Infrastructure.Security.Jwt;
+namespace ArtToCart.Application.Shared.Interfaces;
 
 public interface IJwtService
 {
