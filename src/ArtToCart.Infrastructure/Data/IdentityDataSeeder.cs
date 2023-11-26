@@ -28,6 +28,12 @@ public class IdentityDataSeeder : IDataSeeder
     {
         var adminRole = await _roleManager.FindByNameAsync(ApplicationRole.Admin.Name);
         var userRole = await _roleManager.FindByNameAsync(ApplicationRole.User.Name);
+        var artistRole = await _roleManager.FindByNameAsync(ApplicationRole.Artist.Name);
+
+        if (artistRole == null)
+        {
+            await _roleManager.CreateAsync(ApplicationRole.Artist);
+        }
 
         if (adminRole == null)
         {
@@ -42,17 +48,20 @@ public class IdentityDataSeeder : IDataSeeder
 
     private async Task SeedUsers()
     {
+        string seedUserGuid = "c554bfdc-8159-4784-88b7-1214deffb209";
+        string seedUser2Guid = "c554bfdc-8159-4784-88b7-1214deffb209";
         if (await _userManager.FindByEmailAsync("example@test.com") == null)
         {
             var user = new ApplicationUser
             {
+                Id = Guid.Parse(seedUserGuid),
                 UserName = "test123",
                 FirstName = "Test",
                 LastName = "Tester",
                 Email = "example@test.com",
             };
 
-            var result = await _userManager.CreateAsync(user, "123456");
+            var result = await _userManager.CreateAsync(user, "Test1234!");
 
             if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.Admin.Name);
         }
@@ -61,12 +70,16 @@ public class IdentityDataSeeder : IDataSeeder
         {
             var user = new ApplicationUser
             {
-                UserName = "test2", FirstName = "Test", LastName = "Tester2", Email = "test2@test.com"
+                Id = Guid.Parse(seedUser2Guid), UserName = "test2", FirstName = "Test", LastName = "Tester2", Email = "test2@test.com"
             };
 
-            var result = await _userManager.CreateAsync(user, "123456");
+            var result = await _userManager.CreateAsync(user, "Test123!");
 
-            if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.User.Name);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, ApplicationRole.Artist.Name);
+                await _userManager.AddToRoleAsync(user, ApplicationRole.User.Name);
+            }
         }
     }
 }

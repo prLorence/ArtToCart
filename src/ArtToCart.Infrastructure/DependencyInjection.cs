@@ -34,10 +34,18 @@ public static class DependencyInjection
                 .AddEntityFrameworkStores<ArtToCartIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
+        services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            });
+
         services.AddScoped<IDataSeeder, IdentityDataSeeder>();
         services.AddScoped<IDataSeeder, CatalogDataSeeder>();
 
         services.AddTransient(typeof(IRepository<>), typeof(ProductRepository<>));
+        services.AddSingleton(typeof(IJwtService), typeof(JwtService));
 
         return services;
     }
