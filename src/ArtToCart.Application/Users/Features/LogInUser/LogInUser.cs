@@ -17,7 +17,7 @@ public record LogInUserQuery(
     string Email,
     string Password) : IRequest<Result<LogInUserResponse>>;
 
-internal class LogInUserValidation : AbstractValidator<LogInUserQuery>
+ internal class LogInUserValidation : AbstractValidator<LogInUserQuery>
 {
     public LogInUserValidation()
     {
@@ -33,8 +33,8 @@ internal class LogInUserValidation : AbstractValidator<LogInUserQuery>
     }
 }
 
-public class LogInUserQueryHandler : IRequestHandler<LogInUserQuery, Result<LogInUserResponse>>
-{
+ public class LogInUserQueryHandler : IRequestHandler<LogInUserQuery, Result<LogInUserResponse>>
+ {
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IJwtService _jwtService;
