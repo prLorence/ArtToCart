@@ -19,7 +19,7 @@ public class LoginUserController : BaseController
     [HttpPost]
     public async Task<IActionResult> LoginUser(LoginUserRequest request)
     {
-        var query = new LogInUserQuery(request.Username, request.Password);
+        var query = new LogInUserQuery(request.Email, request.Password);
 
         var result = await _sender.Send(query);
 

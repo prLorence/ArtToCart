@@ -25,7 +25,7 @@ internal class LogInUserValidation : AbstractValidator<LogInUserQuery>
 
         RuleFor(q => q.Email)
             .NotEmpty()
-            .WithMessage("Username is Required");
+            .WithMessage("Email is Required");
 
         RuleFor(q => q.Password)
             .NotEmpty()
