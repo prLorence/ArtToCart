@@ -22,6 +22,9 @@ public static class DependencyInjection
 
         services.AddMapster();
 
+        services.AddAntiforgery();
+
+        services.AddMvc();
 
         return services;
     }
