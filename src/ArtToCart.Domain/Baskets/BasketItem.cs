@@ -5,11 +5,17 @@ namespace ArtToCart.Domain.Baskets;
 
 public class BasketItem : BaseEntity<BasketItemId>
 {
-    public string ItemPhotoUri { get; private set; }
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
     public string CatalogItemId { get; private set; }
-    public string BasketId { get; private set; }
+    public BasketId BasketId { get; set; }
+    public Basket Basket { get; set; }
+
+    // required by EF Core
+    protected BasketItem()
+    {
+    }
+
 
     private BasketItem(BasketItemId basketItemId,
         string catalogItemId,

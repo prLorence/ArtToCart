@@ -21,6 +21,11 @@ public class BasketItemId : ValueObject
         return new(Guid.Parse(id));
     }
 
+    public static BasketItemId CreateFrom(Guid id)
+    {
+        return new(id);
+    }
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

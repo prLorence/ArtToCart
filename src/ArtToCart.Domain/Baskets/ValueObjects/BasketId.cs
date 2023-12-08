@@ -25,4 +25,9 @@ public class BasketId : ValueObject
     {
         return new(Guid.Parse(id));
     }
+
+    public static BasketId CreateFrom(Guid id)
+    {
+        return new(id);
+    }
 }

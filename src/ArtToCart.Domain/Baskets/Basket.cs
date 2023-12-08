@@ -7,9 +7,9 @@ namespace ArtToCart.Domain.Baskets;
 public class Basket : BaseEntity<BasketId>, IAggregateRoot
 {
     public string BuyerId { get; set; }
-    private readonly List<BasketItem> _basketItems = new();
-    public IReadOnlyCollection<BasketItem> BasketItems => _basketItems.AsReadOnly();
-    public int TotalItemCount => _basketItems.Sum(i => i.Quantity);
+    private readonly List<BasketItem> _items = new();
+    public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+    public int TotalItemCount => _items.Sum(i => i.Quantity);
 
     private Basket()
     {
@@ -27,18 +27,19 @@ public class Basket : BaseEntity<BasketId>, IAggregateRoot
 
     public void AddItem(string catalogItemId, decimal unitPrice, int quantity = 1)
     {
-        if (BasketItems.Any(i => i.CatalogItemId != catalogItemId))
+        if (!Items.Any(i => i.CatalogItemId == catalogItemId))
         {
-            _basketItems.Add(BasketItem.Create(catalogItemId, unitPrice, quantity));
+            _items.Add(BasketItem.Create(catalogItemId, unitPrice, quantity));
             return;
         }
 
-        var existingItem = BasketItems.First(i => i.CatalogItemId == catalogItemId);
-        existingItem.AddQuantity(quantity);
+        var existingItem = Items.FirstOrDefault(i => i.CatalogItemId == catalogItemId);
+
+        existingItem!.AddQuantity(quantity);
     }
 
     public void RemoveEmptyItems()
     {
-        _basketItems.RemoveAll(i => i.Quantity == 0);
+        _items.RemoveAll(i => i.Quantity == 0);
     }
 }
