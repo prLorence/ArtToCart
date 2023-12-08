@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtToCart.Application.Users.Features.GettingUsers;
 
-[Route("/users/[action]")]
+[Route("/users/all")]
 public class GetUsersController : BaseController
 {
     private readonly ISender _sender;

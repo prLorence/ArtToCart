@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
-[Route("/users/[action]")]
+[Route("/users/registration")]
 public class RegisterUserController: BaseController
 {
     private readonly ISender _sender;

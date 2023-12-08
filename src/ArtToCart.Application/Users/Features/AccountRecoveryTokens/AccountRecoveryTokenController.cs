@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtToCart.Application.Users.Features.AccountRecoveryTokens;
 
-[Route("user/ForgetPassword")]
+[Route("user/forgot-password")]
 public class AccountRecoveryTokenController : BaseController
 {
   private readonly ISender _sender;
