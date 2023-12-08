@@ -6,7 +6,7 @@ using MapsterMapper;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ArtToCart.Application.Catalog.Shared.MapConfigs;
+namespace ArtToCart.Application.Shared;
 
 public static class DependencyInjection
 {
