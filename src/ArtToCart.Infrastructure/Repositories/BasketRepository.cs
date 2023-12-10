@@ -50,4 +50,9 @@ public class BasketRepository : IRepository<Basket>
 
         await _context.SaveChangesAsync();
     }
+
+    public Task<IEnumerable<Basket>> ListAsync(string[] ids)
+    {
+        throw new NotImplementedException();
+    }
 }
