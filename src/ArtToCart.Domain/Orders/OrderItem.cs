@@ -12,10 +12,15 @@ public class OrderItem : BaseEntity<OrderItemId>
     #pragma warning disable CS8618 // Required by Entity Framework
     private OrderItem() {}
 
-    public OrderItem(OrderItemId itemId, CatalogItemOrdered itemOrdered, decimal unitPrice, int units) : base(itemId)
+    private OrderItem(OrderItemId itemId, CatalogItemOrdered itemOrdered, decimal unitPrice, int units) : base(itemId)
     {
         ItemOrdered = itemOrdered;
         UnitPrice = unitPrice;
         Units = units;
+    }
+
+    public static OrderItem Create(CatalogItemOrdered itemOrdered, decimal unitPrice, int units)
+    {
+        return new(OrderItemId.CreateUnique(), itemOrdered, unitPrice, units);
     }
 }

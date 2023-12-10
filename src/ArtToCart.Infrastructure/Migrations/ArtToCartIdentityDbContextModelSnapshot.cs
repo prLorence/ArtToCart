@@ -230,7 +230,7 @@ namespace ArtToCart.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<DateTimeOffset>("OrderDate")
+                    b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -509,8 +509,8 @@ namespace ArtToCart.Infrastructure.Migrations
                             b1.Property<Guid>("OrderItemId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<int>("CatalogItemId")
-                                .HasColumnType("integer");
+                            b1.Property<Guid>("CatalogItemId")
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("PictureUri")
                                 .IsRequired()

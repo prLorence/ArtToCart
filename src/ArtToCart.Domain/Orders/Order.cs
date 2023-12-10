@@ -18,7 +18,8 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public decimal Total => _orderItems.Sum(item => item.UnitPrice * item.Units);
     public string BuyerId { get; private set; }
-    public DateTimeOffset OrderDate { get; private set; } = DateTimeOffset.Now;
+
+    public DateTime OrderDate { get; private set; } = DateTime.Now.ToUniversalTime();
     public Address ShipToAddress { get; private set; }
 
     private readonly List<OrderItem> _orderItems = new();
@@ -26,7 +27,7 @@ public class Order : BaseEntity<OrderId>, IAggregateRoot
 
     public static Order Create(string buyerId, Address shippingAddress, List<OrderItem> items)
     {
-        return new(OrderId.CreateUnique(),
+        return new Order(OrderId.CreateUnique(),
             buyerId,
             shippingAddress,
             items
