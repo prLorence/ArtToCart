@@ -1,5 +1,6 @@
 using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Domain.Products;
+using ArtToCart.Domain.Products.ValueObjects;
 using ArtToCart.Infrastructure.Shared;
 
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,16 @@ public class ProductRepository : IRepository<CatalogItem>
             .Include(p => p.Images)
             .ToListAsync();
 
-        return (IEnumerable<CatalogItem>)products;
+        return products;
+    }
+
+    public async Task<IEnumerable<CatalogItem>> ListAsync(string[] ids)
+    {
+        var products = await _context.CatalogItems.ToListAsync();
+
+        var selectedProducts = products.Where(p => ids.Contains(p.Id.Value.ToString()));
+
+        return selectedProducts;
     }
 
     public async Task<CatalogItem> FirstOrDefaultAsync(string id)

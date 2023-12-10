@@ -4,6 +4,7 @@ namespace ArtToCart.Application.Shared.Interfaces;
 public interface IRepository<T>
 {
     Task<IEnumerable<T>> GetAllAsync();
+    Task<IEnumerable<T>> ListAsync(string[] ids);
 
     Task<T> FirstOrDefaultAsync(string id);
     // TODO: this should be in a command repository
