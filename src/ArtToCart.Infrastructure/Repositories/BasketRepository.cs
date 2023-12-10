@@ -24,7 +24,7 @@ public class BasketRepository : IRepository<Basket>
         return items;
     }
 
-    public async Task<Basket> FirstOrDefaultAsync(string id)
+    public async Task<Basket?> FirstOrDefaultAsync(string id)
     {
        var userItems = await _context.Basket
             .Where(b => b.BuyerId == id)
