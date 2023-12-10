@@ -1,5 +1,6 @@
 using ArtToCart.Domain.Orders;
 using ArtToCart.Domain.Orders.ValueObjects;
+using ArtToCart.Domain.Products.ValueObjects;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -19,6 +20,10 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
         builder.OwnsOne(i => i.ItemOrdered, io =>
         {
             io.WithOwner();
+
+            io.Property(io => io.CatalogItemId)
+                .HasConversion(id => id.Value,
+                    value => CatalogItemId.CreateFrom(value));
 
             io.Property(cio => cio.ProductName)
                 .HasMaxLength(50)
