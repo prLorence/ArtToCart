@@ -7,6 +7,7 @@ using ArtToCart.Application.Shared.Exceptions;
 using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Application.Shared.Models;
 using ArtToCart.Domain.Baskets;
+using ArtToCart.Domain.Orders;
 using ArtToCart.Domain.Products;
 using ArtToCart.Infrastructure.Data;
 using ArtToCart.Infrastructure.Repositories;
@@ -49,6 +50,7 @@ public static class DependencyInjection
 
         services.AddTransient(typeof(IRepository<Basket>), typeof(BasketRepository));
         services.AddTransient(typeof(IRepository<CatalogItem>), typeof(ProductRepository));
+        services.AddTransient(typeof(IRepository<Order>), typeof(OrderRepository));
 
         services.AddSingleton(typeof(IJwtService), typeof(JwtService));
 

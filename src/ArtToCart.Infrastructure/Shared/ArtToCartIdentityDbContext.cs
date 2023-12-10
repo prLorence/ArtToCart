@@ -1,6 +1,7 @@
 using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Application.Shared.Models;
 using ArtToCart.Domain.Baskets;
+using ArtToCart.Domain.Orders;
 using ArtToCart.Domain.Products;
 using ArtToCart.Domain.Products.Entities;
 using ArtToCart.Infrastructure.Data;
@@ -38,4 +39,5 @@ public class ArtToCartIdentityDbContext : IdentityDbContext<ApplicationUser, App
     public DbSet<ApplicationUser> Users { get; set; }
 
     public DbSet<Basket> Basket { get; set; }
+    public DbSet<Order> Order { get; set; }
 }
