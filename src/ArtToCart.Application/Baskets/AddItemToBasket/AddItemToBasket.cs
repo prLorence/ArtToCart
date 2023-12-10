@@ -1,5 +1,6 @@
 using ArtToCart.Application.Baskets.Shared;
 using ArtToCart.Application.Shared.Interfaces;
+using ArtToCart.Application.Shared.Models;
 using ArtToCart.Domain.Baskets;
 using ArtToCart.Domain.Products;
 using ArtToCart.Domain.Products.ValueObjects;
@@ -13,6 +14,8 @@ using Mapster;
 using MapsterMapper;
 
 using MediatR;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace ArtToCart.Application.Baskets.AddItemToBasket;
 
@@ -43,30 +46,39 @@ public class AddToBasketCommandValidator : AbstractValidator<AddItemToBasketComm
 
 public class AddItemToBasketCommandHandler : IRequestHandler<AddItemToBasketCommand, Result<AddItemToBasketResponse>>
 {
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IRepository<Basket> _repository;
     private readonly IMapper _mapper;
 
-    public AddItemToBasketCommandHandler(IRepository<Basket> repository, IMapper mapper)
+    public AddItemToBasketCommandHandler(IRepository<Basket> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
     {
         _repository = repository;
         _mapper = mapper;
+        _userManager = userManager;
     }
 
     public async Task<Result<AddItemToBasketResponse>> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
     {
-        var basket = await _repository.FirstOrDefaultAsync(request.Username);
+        var user = await _userManager.FindByNameAsync(request.Username);
+
+        if (user == null)
+        {
+            return Result.Fail($"User with user name {request.Username} doesn't exist");
+        }
+
+        var basket = await _repository.FirstOrDefaultAsync(user.Id.ToString());
 
         if (basket == null)
         {
-            basket = Basket.Create(request.Username);
+            basket = Basket.Create(user.Id.ToString());
             await _repository.AddAsync(basket);
         }
 
         basket.AddItem(request.CatalogItemId, request.Price, request.Quantity);
 
-        var result = _mapper.Map<BasketDto>(basket);
-
         await _repository.UpdateAsync(basket);
+
+        var result = _mapper.Map<BasketDto>(basket);
 
         return new AddItemToBasketResponse(result);
     }
