@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArtToCart.Application.Catalog.GettingProducts;
 
 
-[Route("/products/[action]")]
+[Route("/products/all")]
 public class GetProductsController : BaseController
 {
     private readonly ISender _sender;
