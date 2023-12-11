@@ -68,7 +68,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         var items = basket.Items.Select(basketItem =>
         {
             var catalogItem = selectedItems.First(c => Equals(c.Id, CatalogItemId.CreateFrom(basketItem.CatalogItemId)));
-            var itemOrdered = new CatalogItemOrdered(catalogItem.Id, catalogItem.Name, "https://example-uri.com");
+            var itemOrdered = new CatalogItemOrdered(catalogItem.Id, catalogItem.Name, catalogItem.Images[0].ImageUrl);
             var orderItem = OrderItem.Create(itemOrdered, basketItem.UnitPrice, basketItem.Quantity);
             return orderItem;
         }).ToList();
