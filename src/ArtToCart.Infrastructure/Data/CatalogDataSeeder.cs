@@ -39,8 +39,10 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             basicCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item1.AddProductImages( new List<ProductImage> {
             new(
@@ -50,14 +52,25 @@ public class CatalogDataSeeder : IDataSeeder
             item1.Id)
         });
 
+        item1.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item1.Id,
+                "buyerId")
+        });
+
+
         CatalogItem item2 = CatalogItem.Create(
             "Basic Product 2",
             150.00m,
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             basicCatalog.Id,
-                new List<ProductImage>());
+                new List<ProductImage>(),
+            new List<ItemReview>());
 
         item2.AddProductImages( new List<ProductImage> {
             new(
@@ -65,6 +78,14 @@ public class CatalogDataSeeder : IDataSeeder
             "https://atcblobstore.blob.core.windows.net/product-images/P_White.png",
             true,
             item2.Id)
+        });
+
+        item2.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item2.Id,
+                "buyerId")
         });
 
         var seedData = new List<CatalogItem> { item1, item2 };
@@ -91,8 +112,10 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             designCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item1.AddProductImages( new List<ProductImage> {
             new(
@@ -102,14 +125,24 @@ public class CatalogDataSeeder : IDataSeeder
             item1.Id)
         });
 
+        item1.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item1.Id,
+                "buyerId")
+        });
+
         CatalogItem item2 = CatalogItem.Create(
             "Test Product 2",
             150.00m,
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             designCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item2.AddProductImages( new List<ProductImage> {
             new(
@@ -119,14 +152,24 @@ public class CatalogDataSeeder : IDataSeeder
             item2.Id)
         });
 
+        item2.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item2.Id,
+                "buyerId")
+        });
+
         CatalogItem item3 = CatalogItem.Create(
             "Test Product 3",
             150.00m,
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             designCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item3.AddProductImages( new List<ProductImage> {
             new(
@@ -136,14 +179,24 @@ public class CatalogDataSeeder : IDataSeeder
             item3.Id)
         });
 
+        item3.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item3.Id,
+                "buyerId")
+        });
+
         CatalogItem item4 = CatalogItem.Create(
             "Test Product 4",
             150.00m,
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             designCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item4.AddProductImages( new List<ProductImage> {
             new(
@@ -153,14 +206,25 @@ public class CatalogDataSeeder : IDataSeeder
             item4.Id)
         });
 
+        item4.AddReviews(new List<ItemReview>
+        {
+            new(
+                ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item4.Id,
+                "buyerId")
+        });
+
         CatalogItem item5 = CatalogItem.Create(
             "Test Product 5",
             150.00m,
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             designCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item5.AddProductImages( new List<ProductImage> {
             new(
@@ -170,14 +234,24 @@ public class CatalogDataSeeder : IDataSeeder
             item5.Id)
         });
 
+        item5.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item5.Id,
+                "buyerId")
+        });
+
         CatalogItem item6 = CatalogItem.Create(
             "Test Product 6",
             150.00m,
             "Test Description",
             "L",
             "sellerId",
+            AverageRating.CreateNew(),
             designCatalog.Id,
-                new List<ProductImage>());
+            new List<ProductImage>(),
+            new List<ItemReview>());
 
         item6.AddProductImages( new List<ProductImage> {
             new(
@@ -185,6 +259,14 @@ public class CatalogDataSeeder : IDataSeeder
             "https://atcblobstore.blob.core.windows.net/product-images/D3_Black.png",
             true,
             item6.Id)
+        });
+
+        item6.AddReviews(new List<ItemReview>
+        {
+            new(ItemReviewId.CreateUnique(),
+                "Great Product!",
+                item6.Id,
+                "buyerId")
         });
 
         var seedData = new List<CatalogItem> { item1, item2, item3, item4, item5, item6 };
