@@ -10,8 +10,6 @@ public class CatalogTypeConfiguration : IEntityTypeConfiguration<CatalogType>
 {
     public void Configure(EntityTypeBuilder<CatalogType> builder)
     {
-        builder.ToTable("catalog_type");
-
         builder.HasKey(ct => ct.Id);
 
         builder.Property(ct => ct.Id)

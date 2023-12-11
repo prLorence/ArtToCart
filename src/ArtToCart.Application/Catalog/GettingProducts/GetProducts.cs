@@ -34,11 +34,6 @@ public class GetProducts : IRequestHandler<GetProductsQuery, Result<GetProductsR
 
     public async Task<Result<GetProductsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        // var jsonSerializerOptions = new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve };
-        // var jsonSerializer = JsonSerializer(jsonSerializerOptions);
-        //
-// // Serialize the CatalogItem object.
-//         var json = jsonSerializer.Serialize(catalogItem);
         var products = await _productRepository.GetAllAsync();
 
         var result = _mapper.Map<List<ProductDto>>(products);
