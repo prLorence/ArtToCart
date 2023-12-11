@@ -51,6 +51,7 @@ public static class DependencyInjection
         services.AddTransient(typeof(IRepository<Basket>), typeof(BasketRepository));
         services.AddTransient(typeof(IRepository<CatalogItem>), typeof(ProductRepository));
         services.AddTransient(typeof(IRepository<Order>), typeof(OrderRepository));
+        services.AddTransient(typeof(IRepository<CatalogType>), typeof(CatalogTypeRepository));
 
         services.AddSingleton(typeof(IJwtService), typeof(JwtService));
 
