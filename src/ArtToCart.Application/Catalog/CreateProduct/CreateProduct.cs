@@ -112,8 +112,10 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             request.Description,
             request.Size,
             request.ArtistId,
+            AverageRating.CreateNew(),
             catalogType.Id,
-            new List<ProductImage>()
+            new List<ProductImage>(),
+            new List<ItemReview>()
             );
 
         // upload images
