@@ -8,6 +8,8 @@ using FluentValidation;
 
 using MediatR;
 
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ArtToCart.Application;
@@ -25,6 +27,18 @@ public static class DependencyInjection
         services.AddAntiforgery();
 
         services.AddMvc();
+
+        return services;
+    }
+
+    public static IServiceCollection AddAzure(this IServiceCollection services, IConfiguration config)
+    {
+        var connectionString = config.GetConnectionString("AzureBlobStorage");
+
+        services.AddAzureClients(azureBuilder =>
+        {
+            azureBuilder.AddBlobServiceClient(connectionString);
+        });
 
         return services;
     }
