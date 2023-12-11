@@ -16,9 +16,11 @@ public class ProductMapConfig : IRegister
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Size, src => src.Size)
             .Map(dest => dest.SellerId, src => src.SellerId)
+            .Map(dest => dest.AverageRating, src => src.AverageRating.Value)
             .Map(dest => dest.CatalogType, src => src.CatalogType.Type)
             .Map(dest => dest.CatalogTypeId, src => src.CatalogTypeId.Value)
             .Map(dest => dest.Images, src => src.Images.Adapt<IEnumerable<ProductImageDto>>())
+            .Map(dest => dest.Reviews, src => src.Reviews.Adapt<IEnumerable<ItemReviewDto>>())
             .PreserveReference(true);
 
         config.NewConfig<ProductImage, ProductImageDto>()
@@ -27,5 +29,11 @@ public class ProductMapConfig : IRegister
             .Map(dest => dest.IsMain, src => src.IsMain)
             .Map(dest => dest.CatalogItemId, src => src.CatalogItemId.Value)
             .PreserveReference(true);
+
+        config.NewConfig<ItemReview, ItemReviewDto>()
+            .Map(dest => dest.Value, src => src.Value)
+            .Map(dest => dest.CreatedDateTime, src => src.CreatedDateTime)
+            .Map(dest => dest.BuyerId, src => src.BuyerId);
+
     }
 }

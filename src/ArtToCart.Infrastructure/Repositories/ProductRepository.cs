@@ -20,6 +20,7 @@ public class ProductRepository : IRepository<CatalogItem>
         var products = await _context.CatalogItems
             .Include(p => p.CatalogType)
             .Include(p => p.Images)
+            .Include(p => p.Reviews)
             .ToListAsync();
 
         return products;
@@ -37,7 +38,9 @@ public class ProductRepository : IRepository<CatalogItem>
     public async Task<CatalogItem> FirstOrDefaultAsync(string id)
     {
         var product = await _context.CatalogItems
-            .FirstOrDefaultAsync(p => p.Id.Value == Guid.Parse(id));
+            .Include(ci => ci.Images)
+            .Include(ci => ci.Reviews)
+            .FirstOrDefaultAsync(p => p.Id == CatalogItemId.CreateFrom(id));
 
         return product;
 

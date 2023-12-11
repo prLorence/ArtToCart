@@ -10,8 +10,6 @@ public class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogItem>
 {
     public void Configure(EntityTypeBuilder<CatalogItem> builder)
     {
-        builder.ToTable("CatalogItems");
-
         builder.HasKey(ci => ci.Id);
 
         builder.Property(ci => ci.Id)
@@ -37,12 +35,23 @@ public class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogItem>
             .HasForeignKey(x => x.CatalogItemId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(ci => ci.Reviews)
+            .WithOne(i => i.CatalogItem)
+            .HasForeignKey(x => x.CatalogItemId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.HasOne(ci => ci.CatalogType)
             .WithMany()
             .HasForeignKey(ci => ci.CatalogTypeId);
 
+        builder.OwnsOne(ci => ci.AverageRating);
+
         builder.Metadata
             .FindNavigation(nameof(CatalogItem.Images))
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.Metadata
+            .FindNavigation(nameof(CatalogItem.Reviews))
             .SetPropertyAccessMode(PropertyAccessMode.Field);
 
     }

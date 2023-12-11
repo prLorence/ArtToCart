@@ -10,5 +10,7 @@ public class ProductDto
     public string SellerId { get; init; }
     public Guid CatalogTypeId { get; init; }
     public string CatalogType { get; init; } = default!;
+    public double AverageRating { get; init; }
     public IEnumerable<ProductImageDto>? Images { get; init; }
+    public IEnumerable<ItemReviewDto>? Reviews { get; init; }
 }
