@@ -44,9 +44,10 @@ public class ProductRepository : IRepository<CatalogItem>
         // return (CatalogItem)!product; // assert that product is not null
     }
 
-    public Task AddAsync(CatalogItem entity)
+    public async Task AddAsync(CatalogItem entity)
     {
-        throw new NotImplementedException();
+        await _context.CatalogItems.AddAsync(entity);
+        await _context.SaveChangesAsync();
     }
 
     public Task UpdateAsync(CatalogItem entity)
