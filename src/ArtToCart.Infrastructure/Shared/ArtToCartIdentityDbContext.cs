@@ -35,6 +35,7 @@ public class ArtToCartIdentityDbContext : IdentityDbContext<ApplicationUser, App
 
     public DbSet<CatalogType> CatalogTypes { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
+    public DbSet<ItemReview> ItemReview { get; set; }
     public DbSet<CatalogItem> CatalogItems { get; set; }
     public DbSet<ApplicationUser> Users { get; set; }
 

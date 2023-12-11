@@ -3,6 +3,7 @@ using System;
 using ArtToCart.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArtToCart.Infrastructure.Migrations
 {
     [DbContext(typeof(ArtToCartIdentityDbContext))]
-    partial class ArtToCartIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231211122146_ProductReviewsInitial")]
+    partial class ProductReviewsInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,20 +321,8 @@ namespace ArtToCart.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("BuyerId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid>("CatalogItemId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
