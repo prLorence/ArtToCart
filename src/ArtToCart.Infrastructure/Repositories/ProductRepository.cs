@@ -28,7 +28,10 @@ public class ProductRepository : IRepository<CatalogItem>
 
     public async Task<IEnumerable<CatalogItem>> ListAsync(string[] ids)
     {
-        var products = await _context.CatalogItems.ToListAsync();
+        var products = await _context.CatalogItems
+            .Include(p => p.Images)
+            .Include(p => p.Reviews)
+            .ToListAsync();
 
         var selectedProducts = products.Where(p => ids.Contains(p.Id.Value.ToString()));
 
@@ -53,8 +56,9 @@ public class ProductRepository : IRepository<CatalogItem>
         await _context.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(CatalogItem entity)
+    public async Task UpdateAsync(CatalogItem entity)
     {
-        throw new NotImplementedException();
+        _context.CatalogItems.Update(entity);
+        await _context.SaveChangesAsync();
     }
 }

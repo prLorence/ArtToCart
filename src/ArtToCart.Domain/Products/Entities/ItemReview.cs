@@ -8,6 +8,7 @@ public class ItemReview : BaseEntity<ItemReviewId>
     public string Value { get; }
     public CatalogItemId CatalogItemId { get; }
     public CatalogItem CatalogItem { get; }
+    public int RatingValue { get; }
     public string BuyerId { get; }
     public DateTime CreatedDateTime { get; set; } = DateTime.Now.ToUniversalTime();
 
@@ -21,9 +22,11 @@ public class ItemReview : BaseEntity<ItemReviewId>
     public ItemReview(
         ItemReviewId id,
         string value,
+        int ratingValue,
         CatalogItemId catalogItemId,
         string buyerId) : base(id)
     {
+        RatingValue = ratingValue;
         CatalogItemId = catalogItemId;
         BuyerId = buyerId;
         Value = value;

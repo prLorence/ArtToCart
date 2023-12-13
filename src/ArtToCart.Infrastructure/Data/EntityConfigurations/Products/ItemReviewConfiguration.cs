@@ -23,6 +23,8 @@ public class ItemReviewConfiguration : IEntityTypeConfiguration<ItemReview>
             .HasMaxLength(200)
             .IsRequired(true);
 
+        builder.Property(x => x.RatingValue);
+
         builder.Property(x => x.BuyerId);
     }
 }

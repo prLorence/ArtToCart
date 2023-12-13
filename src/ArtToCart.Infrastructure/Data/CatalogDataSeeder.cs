@@ -39,7 +39,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(5, 1),
             basicCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -56,6 +56,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                5,
                 item1.Id,
                 "buyerId")
         });
@@ -67,7 +68,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(4, 1),
             basicCatalog.Id,
                 new List<ProductImage>(),
             new List<ItemReview>());
@@ -84,6 +85,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                4,
                 item2.Id,
                 "buyerId")
         });
@@ -112,7 +114,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(4, 1),
             designCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -129,6 +131,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                4,
                 item1.Id,
                 "buyerId")
         });
@@ -139,7 +142,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(4, 1),
             designCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -156,6 +159,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                4,
                 item2.Id,
                 "buyerId")
         });
@@ -166,7 +170,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(5, 1),
             designCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -183,6 +187,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                5,
                 item3.Id,
                 "buyerId")
         });
@@ -193,7 +198,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(5, 1),
             designCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -211,6 +216,7 @@ public class CatalogDataSeeder : IDataSeeder
             new(
                 ItemReviewId.CreateUnique(),
                 "Great Product!",
+                5,
                 item4.Id,
                 "buyerId")
         });
@@ -221,7 +227,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(5, 1),
             designCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -238,6 +244,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                5,
                 item5.Id,
                 "buyerId")
         });
@@ -248,7 +255,7 @@ public class CatalogDataSeeder : IDataSeeder
             "Test Description",
             "L",
             "sellerId",
-            AverageRating.CreateNew(),
+            AverageRating.CreateNew(5, 1),
             designCatalog.Id,
             new List<ProductImage>(),
             new List<ItemReview>());
@@ -265,6 +272,7 @@ public class CatalogDataSeeder : IDataSeeder
         {
             new(ItemReviewId.CreateUnique(),
                 "Great Product!",
+                5,
                 item6.Id,
                 "buyerId")
         });

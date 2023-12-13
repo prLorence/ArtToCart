@@ -32,6 +32,7 @@ public class ProductMapConfig : IRegister
 
         config.NewConfig<ItemReview, ItemReviewDto>()
             .Map(dest => dest.Value, src => src.Value)
+            .Map(dest => dest.Rating, src => src.RatingValue)
             .Map(dest => dest.CreatedDateTime, src => src.CreatedDateTime)
             .Map(dest => dest.BuyerId, src => src.BuyerId);
 
