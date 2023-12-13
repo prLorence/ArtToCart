@@ -8,7 +8,5 @@ public record RegisterUserRequest(
     string UserName,
     string Email,
     string Password,
-    string ConfirmPassword)
-{
-    public IEnumerable<string> Roles { get; init; } = new List<string> { Constants.Role.User };
-}
+    string ConfirmPassword,
+    IEnumerable<string>? Roles);
