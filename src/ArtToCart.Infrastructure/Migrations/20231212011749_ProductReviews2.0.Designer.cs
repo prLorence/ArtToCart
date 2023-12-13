@@ -3,6 +3,7 @@ using System;
 using ArtToCart.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArtToCart.Infrastructure.Migrations
 {
     [DbContext(typeof(ArtToCartIdentityDbContext))]
-    partial class ArtToCartIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231212011749_ProductReviews2.0")]
+    partial class ProductReviews20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -327,9 +330,6 @@ namespace ArtToCart.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("RatingValue")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Value")
                         .IsRequired()
