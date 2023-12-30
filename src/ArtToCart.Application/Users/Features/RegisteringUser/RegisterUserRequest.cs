@@ -9,4 +9,4 @@ public record RegisterUserRequest(
     string Email,
     string Password,
     string ConfirmPassword,
-    IEnumerable<string>? Roles);
+    List<string>? Roles);

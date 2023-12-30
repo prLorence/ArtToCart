@@ -2,6 +2,7 @@ using ArtToCart.Web;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtToCart.Application.Catalog.CreateProduct;
@@ -19,14 +20,16 @@ public class CreateProductController : BaseController
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromForm] CreateProductRequest request)
     {
+        var images = new List<IFormFile> {request.Image};
+
         var command = new CreateProductCommand(
             request.Name,
             request.Price,
             request.Description,
-            request.Size,
+            "X",
             request.ArtistId,
             request.CatalogType,
-            request.Images
+            images
         );
 
         var result = await _sender.Send(command);

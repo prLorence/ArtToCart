@@ -37,13 +37,15 @@ public record LogInUserQuery(
  {
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IJwtService _jwtService;
 
-    public LogInUserQueryHandler(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IJwtService jwtService)
+    public LogInUserQueryHandler(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IJwtService jwtService, RoleManager<ApplicationRole> roleManager)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _jwtService = jwtService;
+        _roleManager = roleManager;
     }
 
     public async Task<Result<LogInUserResponse>> Handle(LogInUserQuery request, CancellationToken cancellationToken)
@@ -59,12 +61,18 @@ public record LogInUserQuery(
 
         if (!signInResult.Succeeded)
         {
-            return new LogInUserResponse { FailedObjectResult = signInResult };
+            return Result.Fail("Invalid password");
         }
 
         var roles = await _userManager.GetRolesAsync(user);
         var token = _jwtService.GenerateToken(user.UserName!, user.Email!, user.Id.ToString(), rolesClaims: roles.AsReadOnly());
 
-        return new LogInUserResponse { Token = token, Message = "Log in success" };
+        return new LogInUserResponse
+        {
+            Id = user.Id.ToString(),
+            Username = user.UserName!,
+            Role = roles[0],
+            Token = token
+        };
     }
 }

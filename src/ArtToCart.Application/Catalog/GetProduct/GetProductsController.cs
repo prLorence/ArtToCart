@@ -1,10 +1,11 @@
+using ArtToCart.Application.Catalog.GettingProducts;
 using ArtToCart.Web;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace ArtToCart.Application.Catalog.GettingProducts;
+namespace ArtToCart.Application.Catalog.GetProduct;
 
 
 [Route("/products")]

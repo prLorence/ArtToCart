@@ -1,24 +1,17 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
+using ArtToCart.Application.Catalog.GettingProducts;
 using ArtToCart.Application.Catalog.Shared;
 using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Domain.Products;
-using ArtToCart.Domain.Products.Entities;
 
 using FluentResults;
 
 using FluentValidation;
 
-using Mapster;
-
 using MapsterMapper;
 
 using MediatR;
 
-using Microsoft.AspNetCore.Authentication;
-
-namespace ArtToCart.Application.Catalog.GettingProducts;
+namespace ArtToCart.Application.Catalog.GetProduct;
 
 public record GetProductQuery(string Id) : IRequest<Result<GetProductResponse>>;
 
@@ -47,9 +40,10 @@ public class GetProduct : IRequestHandler<GetProductQuery, Result<GetProductResp
 
     public async Task<Result<GetProductResponse>> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.FirstOrDefaultAsync(request.Id);
+        var products = await _productRepository.ListAsync(new[] {request.Id});
 
-        var result = _mapper.Map<ProductDto>(products);
+
+        var result = _mapper.Map<List<ProductDto>>(products);
 
         return new GetProductResponse(result);
     }

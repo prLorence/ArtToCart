@@ -11,6 +11,9 @@ public class IdentityDataSeeder : IDataSeeder
 {
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly UserManager<ApplicationUser> _userManager;
+    public const string AdminGuid = "3229ad94-821d-43b4-9c38-9112b06a38ae";
+    public const string UserGuid = "4b7db584-4b58-4d23-9d3a-c8d95b4f140a";
+    public const string ArtistGuid = "08cd02b8-2682-4569-92a7-987e1ec28ec1";
 
     public IdentityDataSeeder(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
     {
@@ -48,15 +51,12 @@ public class IdentityDataSeeder : IDataSeeder
 
     private async Task SeedUsers()
     {
-        string adminGuid = "3229ad94-821d-43b4-9c38-9112b06a38ae";
-        string userGuid = "4b7db584-4b58-4d23-9d3a-c8d95b4f140a";
-        string artistGuid = "08cd02b8-2682-4569-92a7-987e1ec28ec1";
 
-        if (await _userManager.FindByEmailAsync("admin@test.com") == null)
+        if (await _userManager.FindByIdAsync(AdminGuid) == null)
         {
             var user = new ApplicationUser
             {
-                Id = Guid.Parse(adminGuid),
+                Id = Guid.Parse(AdminGuid),
                 UserName = "test123",
                 FirstName = "Test",
                 LastName = "Tester",
@@ -68,11 +68,11 @@ public class IdentityDataSeeder : IDataSeeder
             if (result.Succeeded) await _userManager.AddToRoleAsync(user, ApplicationRole.Admin.Name);
         }
 
-        if (await _userManager.FindByEmailAsync("user@test.com") == null)
+        if (await _userManager.FindByIdAsync(UserGuid) == null)
         {
             var user = new ApplicationUser
             {
-                Id = Guid.Parse(userGuid),
+                Id = Guid.Parse(UserGuid),
                 UserName = "user1",
                 FirstName = "first name user",
                 LastName = "last name user",
@@ -87,11 +87,11 @@ public class IdentityDataSeeder : IDataSeeder
             }
         }
 
-        if (await _userManager.FindByEmailAsync("artist@test.com") == null)
+        if (await _userManager.FindByIdAsync(ArtistGuid) == null)
         {
             var user = new ApplicationUser
             {
-                Id = Guid.Parse(artistGuid),
+                Id = Guid.Parse(ArtistGuid),
                 UserName = "artist1",
                 FirstName = "first name artist",
                 LastName = "last name artist",

@@ -20,6 +20,9 @@ public class BasketItemConfiguration : IEntityTypeConfiguration<BasketItem>
             .HasConversion(id => id.Value,
                 value => BasketId.CreateFrom(value));
 
+        builder.Property(bi => bi.Size)
+            .HasMaxLength(3);
+
         builder.Property(bi => bi.UnitPrice)
             .IsRequired(true)
             .HasColumnType("decimal(18,2)");

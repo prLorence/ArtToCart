@@ -78,6 +78,10 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
         await _orderRepository.AddAsync(order);
 
+        basket.RemoveCheckedOutItems();
+
+        _basketRepository.UpdateAsync(basket);
+
         var result = _mapper.Map<OrderDto>(order);
 
         return new CreateOrderResponse(result);

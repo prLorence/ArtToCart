@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Authentication;
 namespace ArtToCart.Application.Catalog.GettingProducts;
 
 
-public record GetProductsQuery() : IRequest<Result<GetProductsResponse>>;
+public record GetProductsQuery(string OrderBy) : IRequest<Result<GetProductsResponse>>;
 
 public class GetProducts : IRequestHandler<GetProductsQuery, Result<GetProductsResponse>>
 {
@@ -35,6 +35,13 @@ public class GetProducts : IRequestHandler<GetProductsQuery, Result<GetProductsR
     public async Task<Result<GetProductsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         var products = await _productRepository.GetAllAsync();
+
+        products = products.OrderByDescending(p => p.AverageRating.Value);
+
+        if (request.OrderBy.Equals("created"))
+        {
+            products = products.OrderByDescending(p => p.CreatedDateTime);
+        }
 
         var result = _mapper.Map<List<ProductDto>>(products);
 

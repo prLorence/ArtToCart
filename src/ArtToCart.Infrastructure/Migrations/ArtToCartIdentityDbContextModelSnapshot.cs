@@ -210,6 +210,11 @@ namespace ArtToCart.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -507,7 +512,7 @@ namespace ArtToCart.Infrastructure.Migrations
                                 .HasMaxLength(90)
                                 .HasColumnType("character varying(90)");
 
-                            b1.Property<string>("State")
+                            b1.Property<string>("Province")
                                 .IsRequired()
                                 .HasMaxLength(60)
                                 .HasColumnType("character varying(60)");

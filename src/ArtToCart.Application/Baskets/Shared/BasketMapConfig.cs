@@ -17,6 +17,7 @@ public class BasketMapConfig : IRegister
 
          config.NewConfig<BasketItem, BasketItemDto>()
              .Map(dest => dest.Id, src => src.Id.Value.ToString())
+             .Map(dest => dest.Size, src => src.Size)
              .Map(dest => dest.CatalogItemId, src => src.CatalogItemId)
              .Map(dest => dest.BasketId, src => src.BasketId.Value.ToString());
      }

@@ -33,7 +33,7 @@ public class ProductRepository : IRepository<CatalogItem>
             .Include(p => p.Reviews)
             .ToListAsync();
 
-        var selectedProducts = products.Where(p => ids.Contains(p.Id.Value.ToString()));
+        var selectedProducts = products.Where(p => ids.Contains(p.Id.Value.ToString()) || ids.Contains(p.SellerId));
 
         return selectedProducts;
     }

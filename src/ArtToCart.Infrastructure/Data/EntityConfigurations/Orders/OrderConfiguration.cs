@@ -36,7 +36,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
                 .HasMaxLength(180)
                 .IsRequired();
 
-            a.Property(a => a.State)
+            a.Property(a => a.Province)
                 .HasMaxLength(60);
 
             a.Property(a => a.Country)

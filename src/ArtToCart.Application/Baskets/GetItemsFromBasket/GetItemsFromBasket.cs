@@ -5,6 +5,7 @@ using ArtToCart.Application.Catalog.GettingProducts;
 using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Application.Shared.Models;
 using ArtToCart.Domain.Baskets;
+using ArtToCart.Domain.Products;
 
 using FluentResults;
 
@@ -35,14 +36,16 @@ public class GetItemsFromBasketQueryValidator : AbstractValidator<GetItemsFromBa
 public class GetItemsFromBasketQueryHandler : IRequestHandler<GetItemsFromBasketQuery, Result<GetItemsFromBasketResponse>>
 {
     private readonly IRepository<Basket> _repository;
+    private readonly IRepository<CatalogItem> _productRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IMapper _mapper;
 
-    public GetItemsFromBasketQueryHandler(IRepository<Basket> repository, UserManager<ApplicationUser> userManager, IMapper mapper)
+    public GetItemsFromBasketQueryHandler(IRepository<Basket> repository, UserManager<ApplicationUser> userManager, IMapper mapper, IRepository<CatalogItem> productRepository)
     {
         _repository = repository;
         _userManager = userManager;
         _mapper = mapper;
+        _productRepository = productRepository;
     }
 
     public async Task<Result<GetItemsFromBasketResponse>> Handle(GetItemsFromBasketQuery request, CancellationToken cancellationToken)

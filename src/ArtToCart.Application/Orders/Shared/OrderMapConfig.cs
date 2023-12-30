@@ -9,6 +9,7 @@ public class OrderMapConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<Order, OrderDto>()
+            .Map(dest => dest.Total, src => src.Total)
             .Map(dest => dest.BuyerId, src => src.BuyerId)
             .Map(dest => dest.ShippingAddress, src => src.ShipToAddress)
             .Map(dest => dest.Items, src => src.OrderItems);
@@ -26,7 +27,7 @@ public class OrderMapConfig : IRegister
         config.NewConfig<Address, AddressDto>()
             .Map(dest => dest.City, src => src.City)
             .Map(dest => dest.Street, src => src.Street)
-            .Map(dest => dest.State, src => src.State)
+            .Map(dest => dest.Province, src => src.Province)
             .Map(dest => dest.Country, src => src.Country)
             .Map(dest => dest.ZipCode, src => src.ZipCode);
     }

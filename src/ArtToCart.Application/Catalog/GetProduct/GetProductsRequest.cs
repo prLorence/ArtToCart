@@ -1,4 +1,4 @@
-namespace ArtToCart.Application.Catalog.GettingProducts;
+namespace ArtToCart.Application.Catalog.GetProduct;
 
 public class GetProductRequest
 {

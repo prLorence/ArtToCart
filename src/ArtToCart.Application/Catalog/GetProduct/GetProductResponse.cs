@@ -1,6 +1,5 @@
 using ArtToCart.Application.Catalog.Shared;
-using ArtToCart.Domain.Products;
 
-namespace ArtToCart.Application.Catalog.GettingProducts;
+namespace ArtToCart.Application.Catalog.GetProduct;
 
-public record GetProductResponse(ProductDto CatalogItem);
+public record GetProductResponse(List<ProductDto> CatalogItem);

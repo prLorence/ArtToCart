@@ -20,7 +20,7 @@ public class GetProductsController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
     {
-        var query = new GetProductsQuery();
+        var query = new GetProductsQuery(request.OrderBy);
 
         var result = await _sender.Send(query);
 

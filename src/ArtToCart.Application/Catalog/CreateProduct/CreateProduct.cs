@@ -65,7 +65,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 
         RuleFor(c => c.Images)
             .NotEmpty()
-            .WithMessage("Name field is required");
+            .WithMessage("Images field is required");
     }
 }
 
@@ -110,8 +110,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             request.Name,
             request.Price,
             request.Description,
-            request.Size,
-            request.ArtistId,
+            request?.Size ?? "x",
+             request.ArtistId,
             AverageRating.CreateNew(),
             catalogType.Id,
             new List<ProductImage>(),

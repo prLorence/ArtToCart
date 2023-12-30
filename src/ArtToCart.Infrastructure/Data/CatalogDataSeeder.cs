@@ -58,7 +58,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 5,
                 item1.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
 
@@ -87,7 +87,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 4,
                 item2.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         var seedData = new List<CatalogItem> { item1, item2 };
@@ -133,7 +133,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 4,
                 item1.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         CatalogItem item2 = CatalogItem.Create(
@@ -161,7 +161,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 4,
                 item2.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         CatalogItem item3 = CatalogItem.Create(
@@ -189,7 +189,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 5,
                 item3.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         CatalogItem item4 = CatalogItem.Create(
@@ -218,7 +218,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 5,
                 item4.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         CatalogItem item5 = CatalogItem.Create(
@@ -246,7 +246,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 5,
                 item5.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         CatalogItem item6 = CatalogItem.Create(
@@ -274,7 +274,7 @@ public class CatalogDataSeeder : IDataSeeder
                 "Great Product!",
                 5,
                 item6.Id,
-                "buyerId")
+                IdentityDataSeeder.UserGuid)
         });
 
         var seedData = new List<CatalogItem> { item1, item2, item3, item4, item5, item6 };

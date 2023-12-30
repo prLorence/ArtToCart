@@ -25,11 +25,11 @@ public class Basket : BaseEntity<BasketId>, IAggregateRoot
         return new Basket(BasketId.CreateUnique(), buyerId);
     }
 
-    public void AddItem(string catalogItemId, decimal unitPrice, int quantity = 1)
+    public void AddItem(string catalogItemId, string size, decimal unitPrice, int quantity = 1)
     {
         if (!Items.Any(i => i.CatalogItemId == catalogItemId))
         {
-            _items.Add(BasketItem.Create(catalogItemId, unitPrice, quantity));
+            _items.Add(BasketItem.Create(catalogItemId, size, unitPrice, quantity));
             return;
         }
 
@@ -41,5 +41,10 @@ public class Basket : BaseEntity<BasketId>, IAggregateRoot
     public void RemoveEmptyItems()
     {
         _items.RemoveAll(i => i.Quantity == 0);
+    }
+
+    public void RemoveCheckedOutItems()
+    {
+        _items.Clear();
     }
 }

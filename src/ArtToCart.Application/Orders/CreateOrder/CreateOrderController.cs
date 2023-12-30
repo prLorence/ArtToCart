@@ -23,7 +23,7 @@ public class CreateOrderController : BaseController
         var shippingAddress = Address.Create(
             request.Address.Street,
             request.Address.City,
-            request.Address.State,
+            request.Address.Province,
             request.Address.Country,
             request.Address.ZipCode
         );

@@ -25,7 +25,8 @@ public class RegisterUserController: BaseController
             request.UserName,
             request.Email,
             request.Password,
-            request.ConfirmPassword);
+            request.ConfirmPassword,
+            request.Roles);
 
         var result = await _sender.Send(command);
         // return result;

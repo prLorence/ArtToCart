@@ -1,5 +1,6 @@
 using ArtToCart.Application.Shared.Interfaces;
 using ArtToCart.Domain.Orders;
+using ArtToCart.Domain.Orders.ValueObjects;
 using ArtToCart.Infrastructure.Shared;
 
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,16 @@ public class OrderRepository : IRepository<Order>
 
     public async Task<Order> FirstOrDefaultAsync(string id)
     {
-        var userOrders = await _context.Order
-            .Where(o => o.Id.Value.ToString() == id)
-            .Include(o => o.OrderItems)
-            .ThenInclude(oi => oi.ItemOrdered)
-            .FirstOrDefaultAsync();
+       var userOrders = await _context.Order
+        .Where(o => o.Id == OrderId.CreateFrom(id))
+        .Include(o => o.OrderItems)
+        .ThenInclude(oi => oi.ItemOrdered)
+        .FirstOrDefaultAsync()
+           ?? await _context.Order
+                .Where(o => o.BuyerId == id)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.ItemOrdered)
+                .FirstOrDefaultAsync();
 
         return userOrders;
     }
@@ -42,8 +48,14 @@ public class OrderRepository : IRepository<Order>
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Order>> ListAsync(string[] ids)
+    public async Task<IEnumerable<Order>> ListAsync(string[] ids)
     {
-        throw new NotImplementedException();
+        var products = await _context.Order
+            .Include(o => o.OrderItems)
+            .ToListAsync();
+
+        var selectedProducts = products.Where(p => ids.Contains(p.BuyerId));
+
+        return selectedProducts;
     }
 }
