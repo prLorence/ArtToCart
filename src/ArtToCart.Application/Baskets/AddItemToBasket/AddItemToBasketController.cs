@@ -19,10 +19,10 @@ public class AddItemToBasketController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddItem(AddItemToBasketCommandRequest request)
+    public async Task<IActionResult> AddItem(AddItemToBasketRequest request)
     {
         var command =
-            new AddItemToBasketCommand(request.Username, request.CatalogItemId, request.Price, request.Quantity);
+            new AddItemToBasketCommand(request.Username, request.Size, request.CatalogItemId, request.Quantity);
 
         var result = await _sender.Send(command);
 

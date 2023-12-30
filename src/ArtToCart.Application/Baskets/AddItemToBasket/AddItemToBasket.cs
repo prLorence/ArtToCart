@@ -21,8 +21,9 @@ namespace ArtToCart.Application.Baskets.AddItemToBasket;
 
 public record AddItemToBasketCommand(
     string Username,
+    string Size,
     string CatalogItemId,
-    decimal Price, int Quantity = 1) : IRequest<Result<AddItemToBasketResponse>>;
+    int Quantity = 1) : IRequest<Result<AddItemToBasketResponse>>;
 
 public class AddToBasketCommandValidator : AbstractValidator<AddItemToBasketCommand>
 {
@@ -38,23 +39,25 @@ public class AddToBasketCommandValidator : AbstractValidator<AddItemToBasketComm
             .NotEmpty()
             .WithMessage("Invalid catalog item id");
 
-        RuleFor(c => c.Price)
+        RuleFor(c => c.Size)
             .NotEmpty()
-            .WithMessage("Invalid price value");
+            .WithMessage("Size is required");
     }
 }
 
 public class AddItemToBasketCommandHandler : IRequestHandler<AddItemToBasketCommand, Result<AddItemToBasketResponse>>
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IRepository<Basket> _repository;
+    private readonly IRepository<Basket> _basketRepository;
+    private readonly IRepository<CatalogItem> _productRepository;
     private readonly IMapper _mapper;
 
-    public AddItemToBasketCommandHandler(IRepository<Basket> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
+    public AddItemToBasketCommandHandler(IRepository<Basket> basketRepository, IMapper mapper, UserManager<ApplicationUser> userManager, IRepository<CatalogItem> productRepository)
     {
-        _repository = repository;
+        _basketRepository = basketRepository;
         _mapper = mapper;
         _userManager = userManager;
+        _productRepository = productRepository;
     }
 
     public async Task<Result<AddItemToBasketResponse>> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
@@ -66,17 +69,24 @@ public class AddItemToBasketCommandHandler : IRequestHandler<AddItemToBasketComm
             return Result.Fail($"User with user name {request.Username} doesn't exist");
         }
 
-        var basket = await _repository.FirstOrDefaultAsync(user.Id.ToString());
+        var basket = await _basketRepository.FirstOrDefaultAsync(user.Id.ToString());
 
         if (basket == null)
         {
             basket = Basket.Create(user.Id.ToString());
-            await _repository.AddAsync(basket);
+            await _basketRepository.AddAsync(basket);
         }
 
-        basket.AddItem(request.CatalogItemId, request.Price, request.Quantity);
+        var catalogItem = await _productRepository.FirstOrDefaultAsync(request.CatalogItemId);
 
-        await _repository.UpdateAsync(basket);
+        if (catalogItem == null)
+        {
+            return Result.Fail("Bad Request: Adding non existent product to basket");
+        }
+
+        basket.AddItem(request.CatalogItemId, request.Size ,catalogItem.Price, request.Quantity);
+
+        await _basketRepository.UpdateAsync(basket);
 
         var result = _mapper.Map<BasketDto>(basket);
 
