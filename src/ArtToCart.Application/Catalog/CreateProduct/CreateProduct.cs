@@ -21,6 +21,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace ArtToCart.Application.Catalog.CreateProduct;
 
@@ -73,12 +74,20 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 {
     private readonly IRepository<CatalogItem> _productRepository;
     private readonly IRepository<CatalogType> _catalogTypeRepository;
+    private readonly ILogger<CreateProductCommandHandler> _logger;
     private readonly BlobServiceClient _blobServiceClient;
     private readonly IConfiguration _configuration;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IMapper _mapper;
 
-    public CreateProductCommandHandler(IRepository<CatalogItem> productRepository, IRepository<CatalogType> catalogTypeRepository, BlobServiceClient blobServiceClient, IConfiguration configuration, UserManager<ApplicationUser> userManager, IMapper mapper)
+    public CreateProductCommandHandler(
+        IRepository<CatalogItem> productRepository,
+        IRepository<CatalogType> catalogTypeRepository,
+        BlobServiceClient blobServiceClient,
+        IConfiguration configuration,
+        UserManager<ApplicationUser> userManager,
+        IMapper mapper,
+        ILogger<CreateProductCommandHandler> logger)
     {
         _productRepository = productRepository;
         _catalogTypeRepository = catalogTypeRepository;
@@ -86,6 +95,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         _configuration = configuration;
         _userManager = userManager;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<Result<CreateProductResponse>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -145,6 +155,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         await _productRepository.AddAsync(product);
 
         var result = _mapper.Map<ProductDto>(product);
+
+        _logger.LogInformation("Product with ID: '{ProductId}' created", product.Id.Value.ToString());
 
         return new CreateProductResponse(result);
     }
