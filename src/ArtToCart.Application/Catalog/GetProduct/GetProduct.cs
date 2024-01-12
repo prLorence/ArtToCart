@@ -27,23 +27,17 @@ public class GetProductQueryValidator : AbstractValidator<GetProductQuery>
     }
 }
 
-public class GetProduct : IRequestHandler<GetProductQuery, Result<GetProductResponse>>
+public class GetProduct(IRepository<CatalogItem> productRepository, IMapper mapper)
+    : IRequestHandler<GetProductQuery, Result<GetProductResponse>>
 {
-    private readonly IRepository<CatalogItem> _productRepository;
-    private readonly IMapper _mapper;
-
-    public GetProduct(IRepository<CatalogItem> productRepository, IMapper mapper)
-    {
-        _productRepository = productRepository;
-        _mapper = mapper;
-    }
-
     public async Task<Result<GetProductResponse>> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.ListAsync(new[] {request.Id});
+        var products = await productRepository.FirstOrDefaultAsync(request.Id);
 
+        if (products == null)
+            return Result.Fail($"Product with an id of {request.Id} is not found");
 
-        var result = _mapper.Map<List<ProductDto>>(products);
+        var result = mapper.Map<List<ProductDto>>(products);
 
         return new GetProductResponse(result);
     }

@@ -45,39 +45,31 @@ public class AddToBasketCommandValidator : AbstractValidator<AddItemToBasketComm
     }
 }
 
-public class AddItemToBasketCommandHandler : IRequestHandler<AddItemToBasketCommand, Result<AddItemToBasketResponse>>
+public class AddItemToBasketCommandHandler(
+    IRepository<Basket> basketRepository,
+    IMapper mapper,
+    UserManager<ApplicationUser> userManager,
+    IRepository<CatalogItem> productRepository)
+    : IRequestHandler<AddItemToBasketCommand, Result<AddItemToBasketResponse>>
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IRepository<Basket> _basketRepository;
-    private readonly IRepository<CatalogItem> _productRepository;
-    private readonly IMapper _mapper;
-
-    public AddItemToBasketCommandHandler(IRepository<Basket> basketRepository, IMapper mapper, UserManager<ApplicationUser> userManager, IRepository<CatalogItem> productRepository)
-    {
-        _basketRepository = basketRepository;
-        _mapper = mapper;
-        _userManager = userManager;
-        _productRepository = productRepository;
-    }
-
     public async Task<Result<AddItemToBasketResponse>> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByNameAsync(request.Username);
+        var user = await userManager.FindByNameAsync(request.Username);
 
         if (user == null)
         {
             return Result.Fail($"User with user name {request.Username} doesn't exist");
         }
 
-        var basket = await _basketRepository.FirstOrDefaultAsync(user.Id.ToString());
+        var basket = await basketRepository.FirstOrDefaultAsync(user.Id.ToString());
 
         if (basket == null)
         {
             basket = Basket.Create(user.Id.ToString());
-            await _basketRepository.AddAsync(basket);
+            await basketRepository.AddAsync(basket);
         }
 
-        var catalogItem = await _productRepository.FirstOrDefaultAsync(request.CatalogItemId);
+        var catalogItem = await productRepository.FirstOrDefaultAsync(request.CatalogItemId);
 
         if (catalogItem == null)
         {
@@ -86,9 +78,9 @@ public class AddItemToBasketCommandHandler : IRequestHandler<AddItemToBasketComm
 
         basket.AddItem(request.CatalogItemId, request.Size ,catalogItem.Price, request.Quantity);
 
-        await _basketRepository.UpdateAsync(basket);
+        await basketRepository.UpdateAsync(basket);
 
-        var result = _mapper.Map<BasketDto>(basket);
+        var result = mapper.Map<BasketDto>(basket);
 
         return new AddItemToBasketResponse(result);
     }

@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ArtToCart.Infrastructure.Shared;
 
-public class ArtToCartIdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+public class ArtToCartDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {
-    public ArtToCartIdentityDbContext(DbContextOptions options) : base(options)
+    public ArtToCartDbContext(DbContextOptions options) : base(options)
     {
     }
 
@@ -23,7 +23,7 @@ public class ArtToCartIdentityDbContext : IdentityDbContext<ApplicationUser, App
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ArtToCartIdentityDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ArtToCartDbContext).Assembly);
 
         modelBuilder.Model.GetEntityTypes()
           .SelectMany(entity => entity.GetProperties())

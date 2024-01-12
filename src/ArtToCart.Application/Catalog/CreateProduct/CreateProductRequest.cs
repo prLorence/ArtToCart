@@ -16,6 +16,4 @@ public class CreateProductRequest
     public string ArtistId { get; init; }
     [FromForm(Name = "image")]
     public IFormFile Image { get; init; }
-    [FromForm(Name = "catalogType")]
-    public string CatalogType { get; init; }
 }

@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtToCart.Application.Users.Features.RegisteringUser;
 
-
 public record RegisterUserCommand(
     string FirstName,
     string LastName,

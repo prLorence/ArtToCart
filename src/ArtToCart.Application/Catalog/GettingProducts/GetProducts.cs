@@ -21,20 +21,12 @@ namespace ArtToCart.Application.Catalog.GettingProducts;
 
 public record GetProductsQuery(string OrderBy) : IRequest<Result<GetProductsResponse>>;
 
-public class GetProducts : IRequestHandler<GetProductsQuery, Result<GetProductsResponse>>
+public class GetProducts(IRepository<CatalogItem> productRepository, IMapper mapper)
+    : IRequestHandler<GetProductsQuery, Result<GetProductsResponse>>
 {
-    private readonly IRepository<CatalogItem> _productRepository;
-    private readonly IMapper _mapper;
-
-    public GetProducts(IRepository<CatalogItem> productRepository, IMapper mapper)
-    {
-        _productRepository = productRepository;
-        _mapper = mapper;
-    }
-
     public async Task<Result<GetProductsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.GetAllAsync();
+        var products = await productRepository.GetAllAsync();
 
         products = products.OrderByDescending(p => p.AverageRating.Value);
 
@@ -43,7 +35,7 @@ public class GetProducts : IRequestHandler<GetProductsQuery, Result<GetProductsR
             products = products.OrderByDescending(p => p.CreatedDateTime);
         }
 
-        var result = _mapper.Map<List<ProductDto>>(products);
+        var result = mapper.Map<List<ProductDto>>(products);
 
         return new GetProductsResponse(result);
     }

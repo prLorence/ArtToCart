@@ -8,15 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArtToCart.Application.Catalog.CreateProduct;
 
 [Route("/products/create")]
-public class CreateProductController : BaseController
+public class CreateProductController(ISender sender) : BaseController
 {
-    private readonly ISender _sender;
-
-    public CreateProductController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromForm] CreateProductRequest request)
     {
@@ -28,15 +21,14 @@ public class CreateProductController : BaseController
             request.Description,
             "X",
             request.ArtistId,
-            request.CatalogType,
             images
         );
 
-        var result = await _sender.Send(command);
+        var result = await sender.Send(command);
 
         if (result.IsFailed)
         {
-            return BadRequest(result.Errors.Select(e => e.Reasons));
+            return BadRequest(result.Errors.Select(e => e.Message));
         }
 
         return Ok(result.Value);

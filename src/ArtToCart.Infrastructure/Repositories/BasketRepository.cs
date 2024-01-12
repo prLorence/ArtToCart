@@ -9,9 +9,9 @@ namespace ArtToCart.Infrastructure.Repositories;
 
 public class BasketRepository : IRepository<Basket>
 {
-    private readonly ArtToCartIdentityDbContext _context;
+    private readonly ArtToCartDbContext _context;
 
-    public BasketRepository(ArtToCartIdentityDbContext context)
+    public BasketRepository(ArtToCartDbContext context)
     {
         _context = context;
     }

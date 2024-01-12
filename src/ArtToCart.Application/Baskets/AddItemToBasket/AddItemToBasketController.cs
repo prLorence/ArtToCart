@@ -9,22 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArtToCart.Application.Baskets.AddItemToBasket;
 
 [Route("/basket/add")]
-public class AddItemToBasketController : BaseController
+public class AddItemToBasketController(ISender sender) : BaseController
 {
-    private readonly ISender _sender;
-
-    public AddItemToBasketController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpPost]
     public async Task<IActionResult> AddItem(AddItemToBasketRequest request)
     {
         var command =
             new AddItemToBasketCommand(request.Username, request.Size, request.CatalogItemId, request.Quantity);
 
-        var result = await _sender.Send(command);
+        var result = await sender.Send(command);
 
         if (!result.IsSuccess)
         {

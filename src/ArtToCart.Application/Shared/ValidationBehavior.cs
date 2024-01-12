@@ -6,44 +6,40 @@ using MediatR;
 
 namespace ArtToCart.Application.Shared;
 
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
+    : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : ResultBase, new()
 {
-    private readonly IValidator<TRequest>? _validator;
-
-    public ValidationBehavior(IValidator<TRequest>? validator = null)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        _validator = validator;
-    }
-
-    public async Task<TResponse> Handle(
-        TRequest request,
-        RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
-    {
-        if (_validator is null)
+        if (!validators.Any())
         {
             return await next();
         }
 
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+        var context = new ValidationContext<TRequest>(request);
 
-        if (validationResult.IsValid)
+        var errorsDictionary = validators
+            .Select(x => x.Validate(context))
+            .SelectMany(x => x.Errors)
+            .Where(x => x != null)
+            .GroupBy(
+                x => x.PropertyName,
+                x => x.ErrorMessage,
+                (propertyName, errorMessages) => new
+                {
+                    Key = propertyName,
+                    Values = errorMessages.Distinct().ToArray()
+                })
+            .ToDictionary(x => x.Key, x => x.Values);
+
+        if (errorsDictionary.Any())
         {
-            return await next();
+            throw new Application.Shared.Exceptions.ValidationException(errorsDictionary);
+
         }
 
-        var resultWithErrors = new TResponse();
-
-        foreach (var error in validationResult.Errors)
-        {
-            var errorDetails = new Error(error.ErrorMessage);
-            errorDetails.Metadata.Add(error.ErrorCode, error.ErrorMessage);
-
-            errorDetails.Reasons.Add(errorDetails);
-        }
-
-        return resultWithErrors;
+        return await next();
     }
 }

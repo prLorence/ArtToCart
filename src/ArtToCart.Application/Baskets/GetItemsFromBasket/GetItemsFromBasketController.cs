@@ -7,21 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArtToCart.Application.Baskets.GetItemsFromBasket;
 
 [Route("basket/items")]
-public class GetItemsFromBasketController : BaseController
+public class GetItemsFromBasketController(ISender sender) : BaseController
 {
-    private readonly ISender _sender;
-
-    public GetItemsFromBasketController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetItems([FromQuery] GetItemsFromBasketRequest request)
     {
         var query = new GetItemsFromBasketQuery(request.Username);
 
-        var result = await _sender.Send(query);
+        var result = await sender.Send(query);
 
         if (!result.IsSuccess)
         {

@@ -7,15 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArtToCart.Application.Baskets.UpdateBasketItems;
 
 [Route("/basket/update")]
-public class UpdateBasketItemsController : BaseController
+public class UpdateBasketItemsController(ISender sender) : BaseController
 {
-    private readonly ISender _sender;
-
-    public UpdateBasketItemsController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpPost]
     public async Task<IActionResult> UpdateItemQuantities(UpdateBasketItemsRequest request)
     {
@@ -26,7 +19,7 @@ public class UpdateBasketItemsController : BaseController
                     b => b.Quantity)
                 );
 
-        var result = await _sender.Send(command);
+        var result = await sender.Send(command);
 
         if (result.IsFailed)
         {

@@ -8,9 +8,9 @@ namespace ArtToCart.Infrastructure.Repositories;
 
 public class CatalogTypeRepository : IRepository<CatalogType>
 {
-    private readonly ArtToCartIdentityDbContext _context;
+    private readonly ArtToCartDbContext _context;
 
-    public CatalogTypeRepository(ArtToCartIdentityDbContext context)
+    public CatalogTypeRepository(ArtToCartDbContext context)
     {
         _context = context;
     }

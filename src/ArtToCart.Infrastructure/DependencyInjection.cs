@@ -31,11 +31,11 @@ public static class DependencyInjection
     {
         AddAuthentication(services, config);
 
-        services.AddDbContext<ArtToCartIdentityDbContext>(options =>
+        services.AddDbContext<ArtToCartDbContext>(options =>
                     options.UseNpgsql(config.GetConnectionString("ArtToCartPsqlConnection"))
                 )
                 .AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ArtToCartIdentityDbContext>()
+                .AddEntityFrameworkStores<ArtToCartDbContext>()
                 .AddDefaultTokenProviders();
 
         services.Configure<IdentityOptions>(options =>

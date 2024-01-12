@@ -31,8 +31,8 @@ public record CreateProductCommand(
     string Description,
     string Size,
     string ArtistId,
-    string CatalogType,
-    List<IFormFile> Images): IRequest<Result<CreateProductResponse>>;
+    List<IFormFile> Images,
+    string? CatalogType = "design"): IRequest<Result<CreateProductResponse>>;
 
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {
@@ -46,7 +46,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 
         RuleFor(c => c.Price)
             .NotEmpty()
-            .WithMessage("Description field is required");
+            .WithMessage("Price field is required");
 
         RuleFor(c => c.Description)
             .NotEmpty()
@@ -70,50 +70,27 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<CreateProductResponse>>
+public class CreateProductCommandHandler(
+    IRepository<CatalogItem> productRepository,
+    IRepository<CatalogType> catalogTypeRepository,
+    BlobServiceClient blobServiceClient,
+    IConfiguration configuration,
+    UserManager<ApplicationUser> userManager,
+    IMapper mapper,
+    ILogger<CreateProductCommandHandler> logger)
+    : IRequestHandler<CreateProductCommand, Result<CreateProductResponse>>
 {
-    private readonly IRepository<CatalogItem> _productRepository;
-    private readonly IRepository<CatalogType> _catalogTypeRepository;
-    private readonly ILogger<CreateProductCommandHandler> _logger;
-    private readonly BlobServiceClient _blobServiceClient;
-    private readonly IConfiguration _configuration;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IMapper _mapper;
-
-    public CreateProductCommandHandler(
-        IRepository<CatalogItem> productRepository,
-        IRepository<CatalogType> catalogTypeRepository,
-        BlobServiceClient blobServiceClient,
-        IConfiguration configuration,
-        UserManager<ApplicationUser> userManager,
-        IMapper mapper,
-        ILogger<CreateProductCommandHandler> logger)
-    {
-        _productRepository = productRepository;
-        _catalogTypeRepository = catalogTypeRepository;
-        _blobServiceClient = blobServiceClient;
-        _configuration = configuration;
-        _userManager = userManager;
-        _mapper = mapper;
-        _logger = logger;
-    }
-
     public async Task<Result<CreateProductResponse>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var blobUrl = _configuration.GetConnectionString("AzureBlobStorageUri");
-        var artist = await _userManager.FindByIdAsync(request.ArtistId);
+        var blobUrl = configuration.GetConnectionString("AzureBlobStorageUri");
+        var artist = await userManager.FindByIdAsync(request.ArtistId);
 
         if (artist == null)
         {
             return Result.Fail("Unauthorized request");
         }
 
-        var catalogType = await _catalogTypeRepository.FirstOrDefaultAsync(request.CatalogType);
-
-        if (catalogType == null)
-        {
-            return Result.Fail("Invalid Catalog type");
-        }
+        var catalogType = await catalogTypeRepository.FirstOrDefaultAsync(request.CatalogType ?? "design");
 
         // create product
         var product = CatalogItem.Create(
@@ -131,7 +108,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         // upload images
         var productImages = new List<ProductImage>();
 
-        var containerClient = _blobServiceClient.GetBlobContainerClient(artist.UserName);
+        var containerClient = blobServiceClient.GetBlobContainerClient(artist.UserName);
 
         await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob, cancellationToken: cancellationToken);
 
@@ -152,11 +129,11 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 
         product.AddProductImages(productImages);
 
-        await _productRepository.AddAsync(product);
+        await productRepository.AddAsync(product);
 
-        var result = _mapper.Map<ProductDto>(product);
+        var result = mapper.Map<ProductDto>(product);
 
-        _logger.LogInformation("Product with ID: '{ProductId}' created", product.Id.Value.ToString());
+        logger.LogInformation("Product with ID: '{ProductId}' created", product.Id.Value.ToString());
 
         return new CreateProductResponse(result);
     }

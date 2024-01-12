@@ -33,31 +33,25 @@ public class GetItemsFromBasketQueryValidator : AbstractValidator<GetItemsFromBa
     }
 }
 
-public class GetItemsFromBasketQueryHandler : IRequestHandler<GetItemsFromBasketQuery, Result<GetItemsFromBasketResponse>>
+public class GetItemsFromBasketQueryHandler(
+    IRepository<Basket> repository,
+    UserManager<ApplicationUser> userManager,
+    IMapper mapper,
+    IRepository<CatalogItem> productRepository)
+    : IRequestHandler<GetItemsFromBasketQuery, Result<GetItemsFromBasketResponse>>
 {
-    private readonly IRepository<Basket> _repository;
-    private readonly IRepository<CatalogItem> _productRepository;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IMapper _mapper;
-
-    public GetItemsFromBasketQueryHandler(IRepository<Basket> repository, UserManager<ApplicationUser> userManager, IMapper mapper, IRepository<CatalogItem> productRepository)
-    {
-        _repository = repository;
-        _userManager = userManager;
-        _mapper = mapper;
-        _productRepository = productRepository;
-    }
+    private readonly IRepository<CatalogItem> _productRepository = productRepository;
 
     public async Task<Result<GetItemsFromBasketResponse>> Handle(GetItemsFromBasketQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByNameAsync(request.Username);
+        var user = await userManager.FindByNameAsync(request.Username);
 
         if (user is null)
         {
             return Result.Fail($"User with user name {request.Username} doesn't exist");
         }
 
-        var basket = await _repository.FirstOrDefaultAsync(user.Id.ToString());
+        var basket = await repository.FirstOrDefaultAsync(user.Id.ToString());
 
         // if (basket == null)
         // {
@@ -65,7 +59,7 @@ public class GetItemsFromBasketQueryHandler : IRequestHandler<GetItemsFromBasket
         //     await _repository.AddAsync(basket);
         // }
 
-        var result = _mapper.Map<BasketDto>(basket);
+        var result = mapper.Map<BasketDto>(basket);
 
         return new GetItemsFromBasketResponse(result);
 

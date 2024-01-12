@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ArtToCart.Infrastructure.Migrations
 {
-    [DbContext(typeof(ArtToCartIdentityDbContext))]
+    [DbContext(typeof(ArtToCartDbContext))]
     [Migration("20231218104230_BasketItemSize")]
     partial class BasketItemSize
     {

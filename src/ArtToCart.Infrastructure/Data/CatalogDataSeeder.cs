@@ -10,11 +10,11 @@ namespace ArtToCart.Infrastructure.Data;
 
 public class CatalogDataSeeder : IDataSeeder
 {
-    private readonly ArtToCartIdentityDbContext _context;
+    private readonly ArtToCartDbContext _context;
     private const string DesignCatalogId = "bc667dc3-0fdd-43cd-8ac7-87dd92a56467";
     private const string BasicCatalogId = "2abe29b6-3b19-44d4-94da-b45eb08b7e59";
 
-    public CatalogDataSeeder(ArtToCartIdentityDbContext context)
+    public CatalogDataSeeder(ArtToCartDbContext context)
     {
         _context = context;
     }
@@ -26,7 +26,7 @@ public class CatalogDataSeeder : IDataSeeder
 
     public async Task SeedBasicCatalog()
     {
-        CatalogType basicCatalog = CatalogType.Create(BasicCatalogId,"Basic Catalog");
+        CatalogType basicCatalog = CatalogType.Create(BasicCatalogId,"basic");
 
         if (_context.CatalogTypes.All(ci => ci.Type != basicCatalog.Type))
         {
@@ -102,7 +102,7 @@ public class CatalogDataSeeder : IDataSeeder
     }
     public async Task SeedDesignCatalog()
     {
-        CatalogType designCatalog = CatalogType.Create(DesignCatalogId,"Design Catalog");
+        CatalogType designCatalog = CatalogType.Create(DesignCatalogId,"design");
 
         if (_context.CatalogTypes.All(ci => ci.Type != designCatalog.Type))
         {

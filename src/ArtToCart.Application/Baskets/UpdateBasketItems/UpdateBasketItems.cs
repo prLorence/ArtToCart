@@ -32,20 +32,12 @@ public class UpdateBasketItemsValidator : AbstractValidator<UpdateBasketItemsCom
     }
 }
 
-public class UpdateBasketItemsCommandHandler : IRequestHandler<UpdateBasketItemsCommand, Result<UpdateBasketItemsResponse>>
+public class UpdateBasketItemsCommandHandler(IRepository<Basket> repository, IMapper mapper)
+    : IRequestHandler<UpdateBasketItemsCommand, Result<UpdateBasketItemsResponse>>
 {
-    private readonly IRepository<Basket> _repository;
-    private readonly IMapper _mapper;
-
-    public UpdateBasketItemsCommandHandler(IRepository<Basket> repository, IMapper mapper)
-    {
-        _repository = repository;
-        _mapper = mapper;
-    }
-
     public async Task<Result<UpdateBasketItemsResponse>> Handle(UpdateBasketItemsCommand request, CancellationToken cancellationToken)
     {
-        var basket = await _repository.FirstOrDefaultAsync(request.BasketId);
+        var basket = await repository.FirstOrDefaultAsync(request.BasketId);
 
         if (basket == null)
         {
@@ -62,9 +54,9 @@ public class UpdateBasketItemsCommandHandler : IRequestHandler<UpdateBasketItems
 
         basket.RemoveEmptyItems();
 
-        await _repository.UpdateAsync(basket);
+        await repository.UpdateAsync(basket);
 
-        var result = _mapper.Map<BasketDto>(basket);
+        var result = mapper.Map<BasketDto>(basket);
 
         return new UpdateBasketItemsResponse(result);
     }

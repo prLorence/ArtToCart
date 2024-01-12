@@ -44,20 +44,12 @@ public class CreateReviewCommandValidator : AbstractValidator<CreateReviewComman
     }
 }
 
-public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, Result<CreateReviewResponse>>
+public class CreateReviewCommandHandler(IRepository<CatalogItem> repository, IMapper mapper)
+    : IRequestHandler<CreateReviewCommand, Result<CreateReviewResponse>>
 {
-    private readonly IRepository<CatalogItem> _repository;
-    private readonly IMapper _mapper;
-
-    public CreateReviewCommandHandler(IRepository<CatalogItem> repository, IMapper mapper)
-    {
-        _repository = repository;
-        _mapper = mapper;
-    }
-
     public async Task<Result<CreateReviewResponse>> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
     {
-        var product = await _repository.FirstOrDefaultAsync(request.CatalogItemId);
+        var product = await repository.FirstOrDefaultAsync(request.CatalogItemId);
 
         if (product == null)
         {
@@ -75,9 +67,9 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, R
 
         product.AverageRating.AddNewRating(request.Rating);
 
-        await _repository.UpdateAsync(product);
+        await repository.UpdateAsync(product);
 
-        var result = _mapper.Map<ProductDto>(product);
+        var result = mapper.Map<ProductDto>(product);
 
         return new CreateReviewResponse(result);
     }

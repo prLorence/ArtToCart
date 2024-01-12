@@ -9,21 +9,19 @@ namespace ArtToCart.Application.Catalog.GetProduct;
 
 
 [Route("/products")]
-public class GetProductController : BaseController
+public class GetProductController(ISender sender) : BaseController
 {
-    private readonly ISender _sender;
-
-    public GetProductController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetProducts([FromQuery] GetProductRequest request)
     {
         var query = new GetProductQuery(request.Id);
 
-        var result = await _sender.Send(query);
+        var result = await sender.Send(query);
+
+        if (result.IsFailed)
+        {
+            return BadRequest(result.Errors.Select(e => e.Message));
+        }
 
         return Ok(result.Value);
     }
