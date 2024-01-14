@@ -15,6 +15,10 @@ using ArtToCart.Infrastructure.Security.Jwt;
 using ArtToCart.Infrastructure.Shared;
 using ArtToCart.Infrastructure.Shared.Persistance;
 
+using Azure.Core;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +35,24 @@ public static class DependencyInjection
     {
         AddAuthentication(services, config);
 
+        SecretClientOptions options = new()
+        {
+            Retry =
+            {
+                Delay= TimeSpan.FromSeconds(2),
+                MaxDelay = TimeSpan.FromSeconds(16),
+                MaxRetries = 5,
+                Mode = RetryMode.Exponential
+            }
+        };
+        var client = new SecretClient(new Uri("https://vault-jbaemzabilcuj.vault.azure.net/"), new DefaultAzureCredential(),options);
+
+        KeyVaultSecret secret = client.GetSecret("sql-connection-string");
+
+        string connectionString = secret.Value;
+
         services.AddDbContext<ArtToCartDbContext>(options =>
-                    options.UseNpgsql(config.GetConnectionString("ArtToCartPsqlConnection"))
+                    options.UseNpgsql($"{connectionString}Trust Server Certificate=true;")
                 )
                 .AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ArtToCartDbContext>()
