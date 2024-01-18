@@ -19,10 +19,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
 builder.Services.AddAzure(builder.Configuration);
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Environment, builder.Configuration);
 
 var app = builder.Build();
 
+// app.Logger.LogInformation("Running the application in '{environmentName}' environment", app.Environment.EnvironmentName);
 
 using (var scope = app.Services.CreateScope())
 {
