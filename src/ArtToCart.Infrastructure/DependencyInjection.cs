@@ -20,10 +20,12 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,28 +33,35 @@ namespace ArtToCart.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IWebHostEnvironment environment, IConfiguration config)
     {
         AddAuthentication(services, config);
 
-        SecretClientOptions options = new()
+        string connectionString = config.GetConnectionString("ArtToCartPsqlConnection");;
+
+        if (environment.IsProduction())
         {
-            Retry =
+            SecretClientOptions options = new()
             {
-                Delay= TimeSpan.FromSeconds(2),
-                MaxDelay = TimeSpan.FromSeconds(16),
-                MaxRetries = 5,
-                Mode = RetryMode.Exponential
-            }
-        };
-        var client = new SecretClient(new Uri("https://vault-jbaemzabilcuj.vault.azure.net/"), new DefaultAzureCredential(),options);
+                Retry =
+                {
+                    Delay= TimeSpan.FromSeconds(2),
+                    MaxDelay = TimeSpan.FromSeconds(16),
+                    MaxRetries = 5,
+                    Mode = RetryMode.Exponential
+                }
+            };
+            var client = new SecretClient(new Uri("https://vault-jbaemzabilcuj.vault.azure.net/"),
+                new DefaultAzureCredential(),
+                options);
 
-        KeyVaultSecret secret = client.GetSecret("sql-connection-string");
+            KeyVaultSecret secret = client.GetSecret("sql-connection-string");
 
-        string connectionString = secret.Value;
+            connectionString = $"{secret.Value} Trust Server Certificate=true;";
+        }
 
         services.AddDbContext<ArtToCartDbContext>(options =>
-                    options.UseNpgsql($"{connectionString}Trust Server Certificate=true;")
+                    options.UseNpgsql(connectionString)
                 )
                 .AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ArtToCartDbContext>()
