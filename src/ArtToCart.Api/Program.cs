@@ -30,7 +30,7 @@ using (var scope = app.Services.CreateScope())
     var scopedProvider = scope.ServiceProvider;
     try
     {
-        // var catalogContext = scopedProvider.GetRequiredService<CatalogContext>();
+        // var catalogContext = scopedProvider.GetRequiredService<ArtToCartDbContext>();
         // await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
 
         var seeders = scopedProvider.GetServices<IDataSeeder>();
@@ -49,7 +49,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
