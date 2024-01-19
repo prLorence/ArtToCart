@@ -51,7 +51,7 @@ public static class DependencyInjection
                     Mode = RetryMode.Exponential
                 }
             };
-            var client = new SecretClient(new Uri("https://vault-hbxnvdyiwfpiv.vault.azure.net/"),
+            var client = new SecretClient(new Uri("https://vault-pktkzsaqqibde.vault.azure.net/"),
                 new DefaultAzureCredential(),
                 options);
 
