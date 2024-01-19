@@ -17,12 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\.dockerignore">
-      <Link>.dockerignore</Link>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ArtToCart.Application\ArtToCart.Application.csproj" />
     <ProjectReference Include="..\ArtToCart.Infrastructure\ArtToCart.Infrastructure.csproj" />
   </ItemGroup>
