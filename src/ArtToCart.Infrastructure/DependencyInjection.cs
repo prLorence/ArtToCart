@@ -39,7 +39,7 @@ public static class DependencyInjection
 
         string connectionString = config.GetConnectionString("ArtToCartPsqlConnection");;
 
-        if (environment.IsProduction())
+        if (!environment.IsProduction())
         {
             SecretClientOptions options = new()
             {
