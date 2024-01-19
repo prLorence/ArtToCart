@@ -22,5 +22,6 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 **/db-data
+**/pgadmin-data
 LICENSE
 README.md
